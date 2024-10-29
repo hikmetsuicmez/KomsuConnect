@@ -29,7 +29,10 @@ public class User implements UserDetails {
     private String role;
     private String neighborhood;
     private boolean enabled = true;
-    private String profession;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "service_profile_id", referencedColumnName = "id")
+    private ServiceProfile serviceProfile;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
