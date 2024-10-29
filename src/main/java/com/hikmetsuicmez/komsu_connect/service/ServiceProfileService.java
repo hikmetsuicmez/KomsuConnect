@@ -1,14 +1,15 @@
 package com.hikmetsuicmez.komsu_connect.service;
 
-import com.hikmetsuicmez.komsu_connect.entity.ServiceProfile;
+import com.hikmetsuicmez.komsu_connect.request.ServiceProfileRequest;
+import com.hikmetsuicmez.komsu_connect.response.ServiceProfileResponse;
 
 import java.util.List;
 
 public interface ServiceProfileService {
 
-    List<ServiceProfile> getAllServiceProfiles();
-    ServiceProfile getServiceProfileById(Long id);
-    ServiceProfile createServiceProfile(ServiceProfile serviceProfile);
-    ServiceProfile updateServiceProfile(ServiceProfile serviceProfile);
+    List<ServiceProfileResponse> getAllServiceProfiles();
+    ServiceProfileResponse getServiceProfileById(Long id);
+    ServiceProfileResponse createServiceProfile(ServiceProfileRequest request);
+    ServiceProfileResponse updateServiceProfile(ServiceProfileRequest request);
     void deleteServiceProfile();
 }

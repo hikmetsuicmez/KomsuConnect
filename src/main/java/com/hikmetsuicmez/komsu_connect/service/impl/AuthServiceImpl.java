@@ -1,8 +1,8 @@
 package com.hikmetsuicmez.komsu_connect.service.impl;
 
-import com.hikmetsuicmez.komsu_connect.dto.AuthRequest;
-import com.hikmetsuicmez.komsu_connect.dto.AuthResponse;
-import com.hikmetsuicmez.komsu_connect.dto.RegisterRequest;
+import com.hikmetsuicmez.komsu_connect.request.AuthRequest;
+import com.hikmetsuicmez.komsu_connect.response.AuthResponse;
+import com.hikmetsuicmez.komsu_connect.request.RegisterRequest;
 import com.hikmetsuicmez.komsu_connect.entity.ServiceProfile;
 import com.hikmetsuicmez.komsu_connect.entity.User;
 import com.hikmetsuicmez.komsu_connect.repository.ServiceProfileRepository;

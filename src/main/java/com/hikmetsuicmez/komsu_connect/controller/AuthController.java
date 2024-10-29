@@ -1,8 +1,8 @@
 package com.hikmetsuicmez.komsu_connect.controller;
 
-import com.hikmetsuicmez.komsu_connect.dto.AuthRequest;
-import com.hikmetsuicmez.komsu_connect.dto.AuthResponse;
-import com.hikmetsuicmez.komsu_connect.dto.RegisterRequest;
+import com.hikmetsuicmez.komsu_connect.request.AuthRequest;
+import com.hikmetsuicmez.komsu_connect.response.AuthResponse;
+import com.hikmetsuicmez.komsu_connect.request.RegisterRequest;
 import com.hikmetsuicmez.komsu_connect.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

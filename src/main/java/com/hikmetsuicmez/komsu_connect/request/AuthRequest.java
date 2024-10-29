@@ -1,4 +1,4 @@
-package com.hikmetsuicmez.komsu_connect.dto;
+package com.hikmetsuicmez.komsu_connect.request;
 
 public record AuthRequest(
         String email,

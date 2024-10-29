@@ -12,10 +12,18 @@ import lombok.*;
 @Builder
 public class ServiceProfile {
 
+    public ServiceProfile(String serviceName, String description) {
+        this.serviceName = serviceName;
+        this.description = description;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String serviceName;
     private String description;
+
+
+
 }
