@@ -1,14 +1,8 @@
 package com.hikmetsuicmez.komsu_connect.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+public record AuthResponse(
+        String token,
+        String message
+) {
 
-@Getter
-@Setter
-@AllArgsConstructor
-public class AuthResponse {
-
-    private String token;
-    private String message;
 }
