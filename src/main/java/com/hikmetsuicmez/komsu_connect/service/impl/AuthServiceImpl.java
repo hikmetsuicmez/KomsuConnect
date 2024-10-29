@@ -3,7 +3,9 @@ package com.hikmetsuicmez.komsu_connect.service.impl;
 import com.hikmetsuicmez.komsu_connect.dto.AuthRequest;
 import com.hikmetsuicmez.komsu_connect.dto.AuthResponse;
 import com.hikmetsuicmez.komsu_connect.dto.RegisterRequest;
+import com.hikmetsuicmez.komsu_connect.entity.ServiceProfile;
 import com.hikmetsuicmez.komsu_connect.entity.User;
+import com.hikmetsuicmez.komsu_connect.repository.ServiceProfileRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
 import com.hikmetsuicmez.komsu_connect.security.JwtService;
 import com.hikmetsuicmez.komsu_connect.service.AuthService;
@@ -21,6 +23,7 @@ import java.util.Optional;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
+    private final ServiceProfileRepository serviceProfileRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationProvider authenticationProvider;
     private final JwtService jwtService;
@@ -28,20 +31,28 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String register(RegisterRequest request) {
-        if (emailExists(request.getEmail())) {
+        if (emailExists(request.email())) {
             throw new IllegalArgumentException("There is an account with that email address: "
-                    + request.getEmail());
+                    + request.email());
         }
         User user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .neighborhood(request.getNeighborhood())
-                .profession(request.getProfession())
+                .firstName(request.firstName())
+                .lastName(request.lastName())
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
+                .neighborhood(request.neighborhood())
                 .role("ROLE_USER")
                 .enabled(true)
                 .build();
+
+        if (request.serviceProfile() != null) {
+            ServiceProfile serviceProfile = ServiceProfile.builder()
+                    .serviceName(request.serviceProfile().serviceName())
+                    .description(request.serviceProfile().description())
+                    .build();
+            user.setServiceProfile(serviceProfile);
+            serviceProfileRepository.save(serviceProfile);
+        }
         userRepository.save(user);
         return "User registered successfully";
     }
@@ -50,12 +61,12 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse login(AuthRequest request) {
         try {
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+                    new UsernamePasswordAuthenticationToken(request.email(), request.password());
             authenticationProvider.authenticate(authenticationToken);
         } catch (BadCredentialsException e) {
             throw new IllegalArgumentException("Invalid email or password");
         }
-        Optional<User> user = userRepository.findByEmail(request.getEmail());
+        Optional<User> user = userRepository.findByEmail(request.email());
         if (user.isEmpty()) {
             throw new IllegalArgumentException("User not found");
         }
