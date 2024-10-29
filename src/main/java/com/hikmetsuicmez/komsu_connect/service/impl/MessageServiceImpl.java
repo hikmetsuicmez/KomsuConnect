@@ -3,14 +3,17 @@ package com.hikmetsuicmez.komsu_connect.service.impl;
 import com.hikmetsuicmez.komsu_connect.entity.Message;
 import com.hikmetsuicmez.komsu_connect.entity.User;
 import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
+import com.hikmetsuicmez.komsu_connect.mapper.MessageMapper;
 import com.hikmetsuicmez.komsu_connect.repository.MessageRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
+import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,7 +24,7 @@ public class MessageServiceImpl implements MessageService {
     private final UserRepository userRepository;
 
     @Override
-    public Message sendMessage(Long receiverId, String content) {
+    public MessageResponse sendMessage(Long receiverId, String content) {
         User sender = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User receiver = userRepository.findById(receiverId)
                 .orElseThrow(() -> new UserNotFoundException("User with ID " + receiverId + " not found"));
@@ -33,15 +36,20 @@ public class MessageServiceImpl implements MessageService {
                 .timestamp(LocalDateTime.now())
                 .build();
 
-        return messageRepository.save(message);
+        return MessageMapper.toMessageResponse(messageRepository.save(message));
+
     }
 
     @Override
-    public List<Message> getMessageHistory(Long userId) {
+    public List<MessageResponse> getMessageHistory(Long userId) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User otherUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found"));
 
-        return messageRepository.findBySenderAndReceiverOrReceiverAndSender(currentUser, otherUser, otherUser, currentUser);
+        List<Message> lists = messageRepository.findBySenderAndReceiverOrReceiverAndSender(currentUser, otherUser, otherUser, currentUser);
+        return lists
+                .stream()
+                .map(MessageMapper::toMessageResponse)
+                .toList();
     }
 }

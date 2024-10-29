@@ -1,6 +1,6 @@
 package com.hikmetsuicmez.komsu_connect.controller;
 
-import com.hikmetsuicmez.komsu_connect.entity.Message;
+import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping("/send/{receiverId}")
-    public Message sendMessage(@PathVariable @Valid Long receiverId, @RequestBody String content) {
+    public MessageResponse sendMessage(@PathVariable Long receiverId,@Valid @RequestBody String content) {
         return messageService.sendMessage(receiverId, content);
     }
 
     @GetMapping("/history/{userId}")
-    public List<Message> getMessageHistory(@PathVariable Long userId) {
+    public List<MessageResponse> getMessageHistory(@PathVariable Long userId) {
         return messageService.getMessageHistory(userId);
     }
 }
