@@ -3,6 +3,7 @@ package com.hikmetsuicmez.komsu_connect.controller;
 import com.hikmetsuicmez.komsu_connect.request.ServiceProfileRequest;
 import com.hikmetsuicmez.komsu_connect.response.ServiceProfileResponse;
 import com.hikmetsuicmez.komsu_connect.service.ServiceProfileService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ public class ServiceProfileController {
 
     @GetMapping
     public ResponseEntity<List<ServiceProfileResponse>> getAllServiceProfiles() {
-        List<ServiceProfileResponse> serviceProfiles = serviceProfileService.getAllServiceProfiles();
-        return ResponseEntity.ok(serviceProfiles);
+        List<ServiceProfileResponse> profiles = serviceProfileService.getAllServiceProfiles();
+        return ResponseEntity.ok(profiles);
     }
 
     @GetMapping("/neighborhood")
@@ -42,7 +43,7 @@ public class ServiceProfileController {
     }
 
     @PostMapping
-    public ResponseEntity<ServiceProfileResponse> createServiceProfile(@RequestBody ServiceProfileRequest request) {
+    public ResponseEntity<ServiceProfileResponse> createServiceProfile(@Valid @RequestBody ServiceProfileRequest request) {
         ServiceProfileResponse createdServiceProfile = serviceProfileService.createServiceProfile(request);
         return new ResponseEntity<>(createdServiceProfile, HttpStatus.CREATED);
     }

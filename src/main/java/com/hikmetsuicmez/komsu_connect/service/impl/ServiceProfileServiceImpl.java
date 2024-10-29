@@ -2,6 +2,7 @@ package com.hikmetsuicmez.komsu_connect.service.impl;
 
 import com.hikmetsuicmez.komsu_connect.entity.ServiceProfile;
 import com.hikmetsuicmez.komsu_connect.entity.User;
+import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
 import com.hikmetsuicmez.komsu_connect.mapper.ServiceProfileMapper;
 import com.hikmetsuicmez.komsu_connect.repository.ServiceProfileRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
@@ -52,7 +53,7 @@ public class ServiceProfileServiceImpl implements ServiceProfileService {
     @Override
     public ServiceProfileResponse getServiceProfileById(Long id) {
         ServiceProfile serviceProfile = serviceProfileRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Service profile not found with id: " + id));
+                .orElseThrow(() -> new UserNotFoundException("Service profile not found with id: " + id));
         return ServiceProfileMapper.toResponse(serviceProfile);
     }
 

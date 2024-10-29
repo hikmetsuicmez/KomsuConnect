@@ -4,6 +4,7 @@ import com.hikmetsuicmez.komsu_connect.request.AuthRequest;
 import com.hikmetsuicmez.komsu_connect.response.AuthResponse;
 import com.hikmetsuicmez.komsu_connect.request.RegisterRequest;
 import com.hikmetsuicmez.komsu_connect.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
         String result = authService.register(request);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
