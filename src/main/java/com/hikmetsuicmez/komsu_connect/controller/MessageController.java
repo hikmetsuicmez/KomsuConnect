@@ -24,4 +24,10 @@ public class MessageController {
     public List<MessageResponse> getMessageHistory(@PathVariable Long userId) {
         return messageService.getMessageHistory(userId);
     }
+
+    @GetMapping("/inbox")
+    public List<MessageResponse> getInbox() {
+        return messageService.getInboxMessages();
+    }
+
 }

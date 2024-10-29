@@ -8,4 +8,5 @@ public interface MessageService {
 
     MessageResponse sendMessage(Long receiverId, String content);
     List<MessageResponse> getMessageHistory(Long userId);
+    List<MessageResponse> getInboxMessages();
 }

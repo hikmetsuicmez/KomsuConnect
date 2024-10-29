@@ -52,4 +52,14 @@ public class MessageServiceImpl implements MessageService {
                 .map(MessageMapper::toMessageResponse)
                 .toList();
     }
+
+    @Override
+    public List<MessageResponse> getInboxMessages() {
+
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Message> messages = messageRepository.findByReceiver(currentUser);
+        return messages.stream()
+                .map(MessageMapper::toMessageResponse)
+                .toList();
+    }
 }

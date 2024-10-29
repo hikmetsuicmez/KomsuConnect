@@ -10,4 +10,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     List<Message> findBySenderAndReceiver(User sender, User receiver);
     List<Message> findBySenderAndReceiverOrReceiverAndSender(User sender, User receiver, User receiverAlt, User senderAlt);
+    List<Message> findByReceiver(User receiver);
 }
