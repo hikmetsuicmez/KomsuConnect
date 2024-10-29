@@ -23,6 +23,18 @@ public class ServiceProfileController {
         return ResponseEntity.ok(serviceProfiles);
     }
 
+    @GetMapping("/neighborhood")
+    public ResponseEntity<List<ServiceProfileResponse>> getNeighborhoodServiceProfiles(@RequestParam String neighborhood) {
+        List<ServiceProfileResponse> profiles = serviceProfileService.getServiceProfilesByNeighborhood(neighborhood);
+        return ResponseEntity.ok(profiles);
+    }
+
+    @GetMapping("/service-name")
+    public ResponseEntity<List<ServiceProfileResponse>> getServiceProfilesByServiceName(@RequestParam String serviceName) {
+        List<ServiceProfileResponse> profiles = serviceProfileService.getServiceProfilesByServiceName(serviceName);
+        return ResponseEntity.ok(profiles);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ServiceProfileResponse> getServiceProfileById(@PathVariable Long id) {
         ServiceProfileResponse serviceProfile = serviceProfileService.getServiceProfileById(id);

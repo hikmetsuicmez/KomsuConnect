@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,12 +23,30 @@ public class ServiceProfileServiceImpl implements ServiceProfileService {
 
     @Override
     public List<ServiceProfileResponse> getAllServiceProfiles() {
-        List<ServiceProfile> serviceProfiles = serviceProfileRepository.findAll();
-        List<ServiceProfileResponse> serviceProfileResponses = new ArrayList<>();
-        for (ServiceProfile serviceProfile : serviceProfiles) {
-            serviceProfileResponses.add(ServiceProfileMapper.toResponse(serviceProfile));
-        }
-        return serviceProfileResponses;
+        List<ServiceProfile> profiles = serviceProfileRepository.findAll();
+        return profiles
+                .stream()
+                .map(ServiceProfileMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public List<ServiceProfileResponse> getServiceProfilesByNeighborhood(String neighborhood) {
+        List<ServiceProfile> profiles = userRepository.findServiceProfilesByNeighborhood(neighborhood);
+        return profiles
+                .stream()
+                .map(ServiceProfileMapper::toResponse)
+                .toList();
+
+    }
+
+    @Override
+    public List<ServiceProfileResponse> getServiceProfilesByServiceName(String serviceName) {
+        List<ServiceProfile> profiles = serviceProfileRepository.findByServiceName(serviceName);
+        return profiles
+                .stream()
+                .map(ServiceProfileMapper::toResponse)
+                .toList();
     }
 
     @Override
@@ -47,6 +64,7 @@ public class ServiceProfileServiceImpl implements ServiceProfileService {
         if (user.getServiceProfile() != null) {
             throw new RuntimeException("User already has a service profile. Only one profile is allowed per user.");
         }
+
         ServiceProfile newServiceProfile = ServiceProfileMapper.toEntity(request);
         user.setServiceProfile(newServiceProfile);
         serviceProfileRepository.save(newServiceProfile);
@@ -79,8 +97,6 @@ public class ServiceProfileServiceImpl implements ServiceProfileService {
             ServiceProfile profileToDelete = user.getServiceProfile();
             user.setServiceProfile(null);
             userRepository.save(user);
-
-            // ServiceProfile kaydını siliyoruz
             serviceProfileRepository.delete(profileToDelete);
         } else {
             throw new RuntimeException("No service profile found to delete.");

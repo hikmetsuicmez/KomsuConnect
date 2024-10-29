@@ -8,6 +8,8 @@ import java.util.List;
 public interface ServiceProfileService {
 
     List<ServiceProfileResponse> getAllServiceProfiles();
+    List<ServiceProfileResponse> getServiceProfilesByNeighborhood(String neighborhood);
+    List<ServiceProfileResponse> getServiceProfilesByServiceName(String serviceName);
     ServiceProfileResponse getServiceProfileById(Long id);
     ServiceProfileResponse createServiceProfile(ServiceProfileRequest request);
     ServiceProfileResponse updateServiceProfile(ServiceProfileRequest request);
