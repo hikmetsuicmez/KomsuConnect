@@ -8,12 +8,12 @@ import com.hikmetsuicmez.komsu_connect.repository.MessageRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
 import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
+import com.hikmetsuicmez.komsu_connect.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +22,7 @@ public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @Override
     public MessageResponse sendMessage(Long receiverId, String content) {
@@ -35,6 +36,9 @@ public class MessageServiceImpl implements MessageService {
                 .content(content)
                 .timestamp(LocalDateTime.now())
                 .build();
+
+        notificationService.sendNewMessageNotification(sender, receiver, content);
+
 
         return MessageMapper.toMessageResponse(messageRepository.save(message));
 
