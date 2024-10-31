@@ -1,7 +1,6 @@
 package com.hikmetsuicmez.komsu_connect.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -27,5 +26,5 @@ public class Notification {
 
     private LocalDateTime timestamp; // Bildirim zamanı
 
-    private boolean isRead; // Okunup okunmadığı bilgisi
+    private boolean isRead = false; // Okunup okunmadığı bilgisi
 }

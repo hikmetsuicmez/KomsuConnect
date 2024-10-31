@@ -8,4 +8,5 @@ public interface NotificationService {
     Notification createNotification(User user, String message);
     void sendEmailNotification(User user, String subject, String content);
     void sendNewMessageNotification(User sender, User receiver, String messageContent);
+    void markAsRead(Long notificationId);
 }

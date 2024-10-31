@@ -4,6 +4,7 @@ import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,12 @@ public class MessageController {
     @GetMapping("/inbox")
     public List<MessageResponse> getInbox() {
         return messageService.getInboxMessages();
+    }
+
+    @PutMapping("/{messageId}/mark-as-read")
+    public ResponseEntity<Void> markMessageAsRead(@PathVariable Long messageId) {
+        messageService.markAsRead(messageId);
+        return ResponseEntity.ok().build();
     }
 
 }

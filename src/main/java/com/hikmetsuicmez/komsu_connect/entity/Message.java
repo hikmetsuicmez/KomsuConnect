@@ -29,6 +29,8 @@ public class Message {
     @NotBlank
     private String content;
     private LocalDateTime timestamp;
+
+    private boolean isRead = false;
 }
 
 

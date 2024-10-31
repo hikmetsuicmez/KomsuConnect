@@ -10,8 +10,10 @@ import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import com.hikmetsuicmez.komsu_connect.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -65,5 +67,21 @@ public class MessageServiceImpl implements MessageService {
         return messages.stream()
                 .map(MessageMapper::toMessageResponse)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public void markAsRead(Long messageId) {
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new UserNotFoundException("Message with ID " + messageId + " not found"));
+
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (!message.getReceiver().getId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("Only the recipient can mark this message as read");
+        }
+
+        message.setRead(true);
+        messageRepository.save(message);
     }
 }
