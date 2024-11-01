@@ -7,6 +7,7 @@ import com.hikmetsuicmez.komsu_connect.entity.ServiceProfile;
 import com.hikmetsuicmez.komsu_connect.entity.User;
 import com.hikmetsuicmez.komsu_connect.repository.ServiceProfileRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
+import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.security.JwtService;
 import com.hikmetsuicmez.komsu_connect.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -71,7 +72,13 @@ public class AuthServiceImpl implements AuthService {
             throw new IllegalArgumentException("User not found");
         }
         String token = jwtService.generateToken(user.get());
-        return new AuthResponse(token, "Login successful");
+        UserSummary userSummary = UserSummary.builder()
+                .id(user.get().getId())
+                .firstName(user.get().getFirstName())
+                .lastName(user.get().getLastName())
+                .build();
+
+        return new AuthResponse(token, "Login successful", userSummary);
     }
 
 
