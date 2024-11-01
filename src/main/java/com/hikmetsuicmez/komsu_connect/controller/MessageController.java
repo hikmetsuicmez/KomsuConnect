@@ -33,7 +33,7 @@ public class MessageController extends RestBaseController {
         return success(messageService.getInboxMessages());
     }
 
-    @PutMapping("/{messageId}/mark-as-read")
+    @PutMapping("/read/{messageId}/")
     public ResponseEntity<Void> markMessageAsRead(@PathVariable Long messageId) {
         messageService.markAsRead(messageId);
         return ResponseEntity.ok().build();

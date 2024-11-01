@@ -10,6 +10,7 @@ import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import com.hikmetsuicmez.komsu_connect.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
     private final UserRepository userRepository;
     private final NotificationService notificationService;
+    private final SimpMessagingTemplate brokerMessagingTemplate;
 
     @Override
     public MessageResponse sendMessage(Long receiverId, String content) {
@@ -37,12 +39,14 @@ public class MessageServiceImpl implements MessageService {
                 .receiver(receiver)
                 .content(content)
                 .timestamp(LocalDateTime.now())
+                .isRead(false)
                 .build();
 
+        Message savedMessage = messageRepository.save(message);
+        brokerMessagingTemplate.convertAndSend("/topic/messages/" + receiverId, savedMessage);
         notificationService.sendNewMessageNotification(sender, receiver, content);
 
-
-        return MessageMapper.toMessageResponse(messageRepository.save(message));
+        return MessageMapper.toMessageResponse(savedMessage);
 
     }
 
@@ -82,6 +86,9 @@ public class MessageServiceImpl implements MessageService {
         }
 
         message.setRead(true);
+        message.setReadTimestamp(LocalDateTime.now());
         messageRepository.save(message);
+
+        brokerMessagingTemplate.convertAndSend("/topic/messages/" + message.getSender().getId(), "Mesaj okundu: " + messageId);
     }
 }

@@ -3,6 +3,7 @@ package com.hikmetsuicmez.komsu_connect.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class Message {
     private LocalDateTime timestamp;
 
     private boolean isRead = false;
+    private LocalDateTime readTimestamp;
 }
 
 
