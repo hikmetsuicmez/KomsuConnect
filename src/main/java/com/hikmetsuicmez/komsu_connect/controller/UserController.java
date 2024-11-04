@@ -1,13 +1,12 @@
 package com.hikmetsuicmez.komsu_connect.controller;
 
 import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
+import com.hikmetsuicmez.komsu_connect.request.UserUpdateRequest;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
 import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +21,18 @@ public class UserController extends RestBaseController {
     public ApiResponse<List<UserSummary>> retrieveAllUsers() {
         List<UserSummary> users = userService.retrieveAllUsers();
         return ApiResponse.success(users);
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<UserSummary> retrieveUser(@PathVariable Long id) {
+        UserSummary userSummary = userService.getUserProfile(id);
+        return ApiResponse.success(userSummary);
+    }
+
+    @PutMapping
+    public ApiResponse<UserSummary> updateUser(@RequestBody UserUpdateRequest request) {
+        UserSummary userSummary = userService.updateUserProfile(request);
+        return ApiResponse.success(userSummary);
     }
 
 }

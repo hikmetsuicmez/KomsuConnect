@@ -41,6 +41,7 @@ public class AuthServiceImpl implements AuthService {
                 .lastName(request.lastName())
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
+                .phoneNumber(request.phoneNumber())
                 .neighborhood(request.neighborhood())
                 .role("ROLE_USER")
                 .enabled(true)

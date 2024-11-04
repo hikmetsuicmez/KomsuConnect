@@ -20,6 +20,8 @@ public record RegisterRequest(
         @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters.")
         String password,
 
+        String phoneNumber,
+
         String role,
 
         @NotBlank(message = "Neighborhood cannot be blank.")

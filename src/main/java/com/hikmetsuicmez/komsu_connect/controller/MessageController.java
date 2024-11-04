@@ -20,17 +20,17 @@ public class MessageController extends RestBaseController {
 
     @PostMapping("/send/{receiverId}")
     public ApiResponse<MessageResponse> sendMessage(@PathVariable Long receiverId, @Valid @RequestBody String content) {
-        return success(messageService.sendMessage(receiverId, content));
+        return ApiResponse.success(messageService.sendMessage(receiverId, content));
     }
 
     @GetMapping("/history/{userId}")
     public ApiResponse<List<MessageResponse>> getMessageHistory(@PathVariable Long userId) {
-        return success(messageService.getMessageHistory(userId));
+        return ApiResponse.success(messageService.getMessageHistory(userId));
     }
 
     @GetMapping("/inbox")
     public ApiResponse<List<MessageResponse>> getInbox() {
-        return success(messageService.getInboxMessages());
+        return ApiResponse.success(messageService.getInboxMessages());
     }
 
     @PutMapping("/read/{messageId}/")
@@ -44,7 +44,7 @@ public class MessageController extends RestBaseController {
             @PathVariable Long userId,
             @PathVariable Long selectedUserId) {
         List<MessageResponse> messages = messageService.getConversationBetweenUsers(userId, selectedUserId);
-        return success(messages);
+        return ApiResponse.success(messages);
     }
 
 }

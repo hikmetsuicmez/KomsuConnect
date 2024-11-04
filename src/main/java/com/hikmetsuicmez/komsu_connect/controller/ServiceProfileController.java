@@ -22,37 +22,37 @@ public class ServiceProfileController extends RestBaseController {
     @GetMapping
     public ApiResponse<List<ServiceProfileResponse>> getAllServiceProfiles() {
         List<ServiceProfileResponse> profiles = serviceProfileService.getAllServiceProfiles();
-        return success(profiles);
+        return ApiResponse.success(profiles);
     }
 
     @GetMapping("/neighborhood")
     public ApiResponse<List<ServiceProfileResponse>> getNeighborhoodServiceProfiles(@RequestParam String neighborhood) {
         List<ServiceProfileResponse> profiles = serviceProfileService.getServiceProfilesByNeighborhood(neighborhood);
-        return success(profiles);
+        return ApiResponse.success(profiles);
     }
 
     @GetMapping("/service-name")
     public ApiResponse<List<ServiceProfileResponse>> getServiceProfilesByServiceName(@RequestParam String serviceName) {
         List<ServiceProfileResponse> profiles = serviceProfileService.getServiceProfilesByServiceName(serviceName);
-        return success(profiles);
+        return ApiResponse.success(profiles);
     }
 
     @GetMapping("/{id}")
     public ApiResponse<ServiceProfileResponse> getServiceProfileById(@PathVariable Long id) {
         ServiceProfileResponse serviceProfile = serviceProfileService.getServiceProfileById(id);
-        return success(serviceProfile);
+        return ApiResponse.success(serviceProfile);
     }
 
     @PostMapping
     public ApiResponse<ServiceProfileResponse> createServiceProfile(@Valid @RequestBody ServiceProfileRequest request) {
         ServiceProfileResponse createdServiceProfile = serviceProfileService.createServiceProfile(request);
-        return success(createdServiceProfile);
+        return ApiResponse.success(createdServiceProfile);
     }
 
     @PutMapping
     public ApiResponse<ServiceProfileResponse> updateServiceProfile(@RequestBody ServiceProfileRequest request) {
         ServiceProfileResponse updatedServiceProfile = serviceProfileService.updateServiceProfile(request);
-        return success(updatedServiceProfile);
+        return ApiResponse.success(updatedServiceProfile);
     }
 
     @DeleteMapping

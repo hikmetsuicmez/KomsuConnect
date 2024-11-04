@@ -23,12 +23,12 @@ public class AuthController extends RestBaseController {
     @PostMapping("/register")
     public ApiResponse<String> register(@Valid @RequestBody RegisterRequest request) {
         String result = authService.register(request);
-        return success(result);
+        return ApiResponse.success(result);
     }
 
     @PostMapping("/login")
     public ApiResponse<AuthResponse> login(@RequestBody AuthRequest request) {
         AuthResponse authResponse = authService.login(request);
-        return success(authResponse);
+        return ApiResponse.success(authResponse);
     }
 }

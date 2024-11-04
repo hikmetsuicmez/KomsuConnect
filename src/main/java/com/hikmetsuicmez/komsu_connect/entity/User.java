@@ -26,6 +26,7 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String password;
+    private String phoneNumber;
     private String role;
     private String neighborhood;
     private boolean enabled = true;

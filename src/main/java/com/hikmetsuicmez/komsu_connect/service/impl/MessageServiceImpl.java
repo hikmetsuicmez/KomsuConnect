@@ -52,8 +52,11 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageResponse> getConversationBetweenUsers(Long userId, Long selectedUserId) {
-        return messageRepository.findConversationBetweenUsers(userId, selectedUserId);
-
+        List<Message> messages = messageRepository.findConversationBetweenUsers(userId, selectedUserId);
+        return messages
+                .stream()
+                .map(MessageMapper::toMessageResponse)
+                .toList();
     }
 
     @Override

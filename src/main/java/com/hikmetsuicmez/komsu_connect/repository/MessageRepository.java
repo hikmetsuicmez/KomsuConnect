@@ -20,5 +20,5 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
             "(m.sender.id = :userId AND m.receiver.id = :selectedUserId)" +
             "OR (m.sender.id = :selectedUserId AND m.receiver.id = :userId)" +
             "ORDER BY m.timestamp")
-    List<MessageResponse> findConversationBetweenUsers(Long userId, Long selectedUserId);
+    List<Message> findConversationBetweenUsers(Long userId, Long selectedUserId);
 }
