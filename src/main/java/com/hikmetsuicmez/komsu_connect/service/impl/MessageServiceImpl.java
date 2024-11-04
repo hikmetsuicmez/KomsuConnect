@@ -51,6 +51,12 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public List<MessageResponse> getConversationBetweenUsers(Long userId, Long selectedUserId) {
+        return messageRepository.findConversationBetweenUsers(userId, selectedUserId);
+
+    }
+
+    @Override
     public List<MessageResponse> getMessageHistory(Long userId) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User otherUser = userRepository.findById(userId)

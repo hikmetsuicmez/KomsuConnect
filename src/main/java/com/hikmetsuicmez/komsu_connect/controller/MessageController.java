@@ -39,4 +39,12 @@ public class MessageController extends RestBaseController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/conversation/{userId}/{selectedUserId}")
+    public ApiResponse<List<MessageResponse>> getConversation(
+            @PathVariable Long userId,
+            @PathVariable Long selectedUserId) {
+        List<MessageResponse> messages = messageService.getConversationBetweenUsers(userId, selectedUserId);
+        return success(messages);
+    }
+
 }

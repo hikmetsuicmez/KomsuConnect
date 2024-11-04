@@ -20,16 +20,15 @@ public class SecurityConfig {
 
     public static final String LOGIN = "/auth/login";
     public static final String REGISTER = "/auth/register";
+    public static final String WEBSOCKET = "/ws/**";
     public static final String[] SWAGGER_PATHS = {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-ui.html"
     };
-
-
+    
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,6 +39,7 @@ public class SecurityConfig {
                         auth
                                 .requestMatchers(LOGIN,REGISTER).permitAll()
                                 .requestMatchers(SWAGGER_PATHS).permitAll()
+                                .requestMatchers(WEBSOCKET).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->
