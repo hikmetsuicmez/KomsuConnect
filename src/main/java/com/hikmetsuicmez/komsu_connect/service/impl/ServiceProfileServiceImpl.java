@@ -83,8 +83,8 @@ public class ServiceProfileServiceImpl implements ServiceProfileService {
         }
 
         ServiceProfile existingProfile = user.getServiceProfile();
-        existingProfile.setServiceName(request.serviceName());
-        existingProfile.setDescription(request.description());
+        existingProfile.setServiceName(request.getServiceName());
+        existingProfile.setDescription(request.getDescription());
         serviceProfileRepository.save(existingProfile);
 
         return ServiceProfileMapper.toResponse(existingProfile);

@@ -32,25 +32,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String register(RegisterRequest request) {
-        if (emailExists(request.email())) {
+        if (emailExists(request.getEmail())) {
             throw new IllegalArgumentException("There is an account with that email address: "
-                    + request.email());
+                    + request.getEmail());
         }
         User user = User.builder()
-                .firstName(request.firstName())
-                .lastName(request.lastName())
-                .email(request.email())
-                .password(passwordEncoder.encode(request.password()))
-                .phoneNumber(request.phoneNumber())
-                .neighborhood(request.neighborhood())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .phoneNumber(request.getPhoneNumber())
+                .neighborhood(request.getNeighborhood())
                 .role("ROLE_USER")
                 .enabled(true)
                 .build();
 
-        if (request.serviceProfile() != null) {
+        if (request.getServiceProfile() != null) {
             ServiceProfile serviceProfile = ServiceProfile.builder()
-                    .serviceName(request.serviceProfile().serviceName())
-                    .description(request.serviceProfile().description())
+                    .serviceName(request.getServiceProfile().getServiceName())
+                    .description(request.getServiceProfile().getDescription())
                     .build();
             user.setServiceProfile(serviceProfile);
             serviceProfileRepository.save(serviceProfile);

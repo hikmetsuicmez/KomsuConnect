@@ -31,7 +31,7 @@ public class User implements UserDetails {
     private String neighborhood;
     private boolean enabled = true;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "service_profile_id", referencedColumnName = "id")
     private ServiceProfile serviceProfile;
 

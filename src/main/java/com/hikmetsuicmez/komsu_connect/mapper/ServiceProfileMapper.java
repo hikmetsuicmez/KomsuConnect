@@ -18,8 +18,8 @@ public class ServiceProfileMapper {
     // DTO to Entity mapping
     public static ServiceProfile toEntity(ServiceProfileRequest request) {
         return ServiceProfile.builder()
-                .serviceName(request.serviceName())
-                .description(request.description())
+                .serviceName(request.getServiceName())
+                .description(request.getDescription())
                 .build();
     }
 }
