@@ -29,7 +29,8 @@ public class UserController extends RestBaseController {
         return ApiResponse.success(userSummary);
     }
 
-    @PutMapping
+
+    @PutMapping("/me")
     public ApiResponse<UserSummary> updateUser(@RequestBody UserUpdateRequest request) {
         UserSummary userSummary = userService.updateUserProfile(request);
         return ApiResponse.success(userSummary);
