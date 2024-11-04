@@ -23,9 +23,9 @@ public class UserController extends RestBaseController {
         return ApiResponse.success(users);
     }
 
-    @GetMapping("/{id}")
-    public ApiResponse<UserSummary> retrieveUser(@PathVariable Long id) {
-        UserSummary userSummary = userService.getUserProfile(id);
+    @GetMapping("/me")
+    public ApiResponse<UserSummary> getCurrentUser() {
+        UserSummary userSummary = userService.getCurrentUserProfile();
         return ApiResponse.success(userSummary);
     }
 

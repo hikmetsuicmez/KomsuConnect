@@ -32,12 +32,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSummary getUserProfile(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User Not Found: " + id));
+    public UserSummary getCurrentUserProfile() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (user == null) {
+            throw new UserNotFoundException("User not found");
+        }
 
         return UserMapper.toUserSummary(user);
     }
+
 
     @Override
     public UserSummary updateUserProfile(UserUpdateRequest userUpdateRequest) {

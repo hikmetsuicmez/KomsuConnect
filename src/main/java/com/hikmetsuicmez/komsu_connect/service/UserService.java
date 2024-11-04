@@ -8,6 +8,6 @@ import java.util.List;
 public interface UserService {
 
     List<UserSummary> retrieveAllUsers();
-    UserSummary getUserProfile(Long id);
+    UserSummary getCurrentUserProfile();
     UserSummary updateUserProfile(UserUpdateRequest userUpdateRequest);
 }
