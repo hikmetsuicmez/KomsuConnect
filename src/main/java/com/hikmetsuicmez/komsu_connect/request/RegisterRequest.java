@@ -1,5 +1,6 @@
 package com.hikmetsuicmez.komsu_connect.request;
 
+import com.hikmetsuicmez.komsu_connect.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -27,12 +28,9 @@ public class RegisterRequest {
 
         private String phoneNumber;
 
-        private String role;
+        private UserRole role;
 
         @NotBlank(message = "Neighborhood cannot be blank.")
         private String neighborhood;
-
-        private ServiceProfileRequest serviceProfile;
-
 
 }

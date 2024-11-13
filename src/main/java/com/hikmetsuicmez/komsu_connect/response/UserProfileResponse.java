@@ -13,6 +13,5 @@ public class UserProfileResponse {
     private String email;
     private String phoneNumber;
     private String neighborhood;
-    private ServiceProfileResponse serviceProfile;
 
 }

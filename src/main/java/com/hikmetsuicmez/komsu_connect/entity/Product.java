@@ -4,26 +4,23 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "service_profiles")
+@Table(name = "products")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ServiceProfile {
-
-    public ServiceProfile(String serviceName, String description) {
-        this.serviceName = serviceName;
-        this.description = description;
-    }
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String serviceName;
+    private String name;
     private String description;
+    private Double price;
 
-
-
+    @ManyToOne
+    @JoinColumn(name = "business_profile_id", nullable = false)
+    private BusinessProfile businessProfile;
 }

@@ -1,11 +1,11 @@
 package com.hikmetsuicmez.komsu_connect.service.impl;
 
+import com.hikmetsuicmez.komsu_connect.entity.BusinessProfile;
+import com.hikmetsuicmez.komsu_connect.enums.UserRole;
 import com.hikmetsuicmez.komsu_connect.request.AuthRequest;
 import com.hikmetsuicmez.komsu_connect.response.AuthResponse;
 import com.hikmetsuicmez.komsu_connect.request.RegisterRequest;
-import com.hikmetsuicmez.komsu_connect.entity.ServiceProfile;
 import com.hikmetsuicmez.komsu_connect.entity.User;
-import com.hikmetsuicmez.komsu_connect.repository.ServiceProfileRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
 import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.security.JwtService;
@@ -24,7 +24,6 @@ import java.util.Optional;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
-    private final ServiceProfileRepository serviceProfileRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationProvider authenticationProvider;
     private final JwtService jwtService;
@@ -43,18 +42,16 @@ public class AuthServiceImpl implements AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .phoneNumber(request.getPhoneNumber())
                 .neighborhood(request.getNeighborhood())
-                .role("ROLE_USER")
+                .role(request.getRole())
                 .enabled(true)
                 .build();
 
-        if (request.getServiceProfile() != null) {
-            ServiceProfile serviceProfile = ServiceProfile.builder()
-                    .serviceName(request.getServiceProfile().getServiceName())
-                    .description(request.getServiceProfile().getDescription())
-                    .build();
-            user.setServiceProfile(serviceProfile);
-            serviceProfileRepository.save(serviceProfile);
+        if (request.getRole() == UserRole.ROLE_BUSINESS_OWNER) {
+            BusinessProfile businessProfile = new BusinessProfile();
+            businessProfile.setUser(user);
+            user.setBusinessProfile(businessProfile);
         }
+
         userRepository.save(user);
         return "User registered successfully";
     }

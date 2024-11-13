@@ -1,5 +1,6 @@
 package com.hikmetsuicmez.komsu_connect.entity;
 
+import com.hikmetsuicmez.komsu_connect.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,17 +28,20 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String phoneNumber;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
     private String neighborhood;
     private boolean enabled = true;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name = "service_profile_id", referencedColumnName = "id")
-    private ServiceProfile serviceProfile;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private BusinessProfile businessProfile;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

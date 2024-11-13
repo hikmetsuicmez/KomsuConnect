@@ -3,15 +3,12 @@ package com.hikmetsuicmez.komsu_connect.service.impl;
 import com.hikmetsuicmez.komsu_connect.entity.User;
 import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
 import com.hikmetsuicmez.komsu_connect.mapper.UserMapper;
-import com.hikmetsuicmez.komsu_connect.repository.ServiceProfileRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
 import com.hikmetsuicmez.komsu_connect.request.UserProfileRequest;
 import com.hikmetsuicmez.komsu_connect.response.UserProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.service.UserService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +19,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final ServiceProfileRepository serviceProfileRepository;
     private final UserMapper userMapper;
 
     @Override
@@ -47,13 +43,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @Transactional
     public UserProfileResponse updateUserProfile(UserProfileRequest userProfileRequest) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findById(loggedInUser.getId())
                 .orElseThrow(() -> new UserNotFoundException("User Not Found: " + loggedInUser.getId()));
 
-        Hibernate.initialize(user.getServiceProfile());
 
         user.setFirstName(userProfileRequest.getFirstName());
         user.setLastName(userProfileRequest.getLastName());
@@ -64,5 +58,11 @@ public class UserServiceImpl implements UserService {
 
 
         return userMapper.toUserProfileResponse(user);
+    }
+
+    public User getCurrentUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User not found: " + email));
     }
 }
