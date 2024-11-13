@@ -33,4 +33,8 @@ public class RegisterRequest {
         @NotBlank(message = "Neighborhood cannot be blank.")
         private String neighborhood;
 
+        private String businessName; // Sadece iş sahibi için
+        
+        private String businessDescription;
+
 }

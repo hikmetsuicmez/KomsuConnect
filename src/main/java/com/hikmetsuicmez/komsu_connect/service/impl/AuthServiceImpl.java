@@ -48,6 +48,8 @@ public class AuthServiceImpl implements AuthService {
 
         if (request.getRole() == UserRole.ROLE_BUSINESS_OWNER) {
             BusinessProfile businessProfile = new BusinessProfile();
+            businessProfile.setBusinessName(request.getBusinessName());
+            businessProfile.setBusinessDescription(request.getBusinessDescription());
             businessProfile.setUser(user);
             user.setBusinessProfile(businessProfile);
         }

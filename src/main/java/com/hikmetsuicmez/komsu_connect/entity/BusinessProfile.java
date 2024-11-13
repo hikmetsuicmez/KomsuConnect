@@ -19,12 +19,14 @@ public class BusinessProfile {
     private Long id;
 
     @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     private String businessName;
-    private String description;
+    private String businessDescription;
 
-    @OneToMany(mappedBy = "businessProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "businessProfile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Product> products;
+
 
 }
