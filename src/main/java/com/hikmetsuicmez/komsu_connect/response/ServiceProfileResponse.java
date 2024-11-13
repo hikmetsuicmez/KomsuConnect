@@ -1,11 +1,15 @@
 package com.hikmetsuicmez.komsu_connect.response;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Builder
-public record ServiceProfileResponse(
-        Long id,
-        String serviceName,
-        String description
-) {
+@Getter
+@Setter
+public class ServiceProfileResponse {
+
+    private Long id;
+    private String serviceName;
+    private String description;
 }
