@@ -1,5 +1,6 @@
-package com.hikmetsuicmez.komsu_connect.request;
+package com.hikmetsuicmez.komsu_connect.response;
 
+import com.hikmetsuicmez.komsu_connect.request.ServiceProfileRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,12 +8,12 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class UserUpdateRequest {
+public class UserProfileResponse {
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String neighborhood;
-    private ServiceProfileRequest serviceProfileRequest;
+    private ServiceProfileRequest serviceProfile;
 
 }

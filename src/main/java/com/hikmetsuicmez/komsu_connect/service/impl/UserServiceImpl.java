@@ -1,13 +1,12 @@
 package com.hikmetsuicmez.komsu_connect.service.impl;
 
-import com.hikmetsuicmez.komsu_connect.entity.ServiceProfile;
 import com.hikmetsuicmez.komsu_connect.entity.User;
 import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
 import com.hikmetsuicmez.komsu_connect.mapper.UserMapper;
 import com.hikmetsuicmez.komsu_connect.repository.ServiceProfileRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
-import com.hikmetsuicmez.komsu_connect.request.RegisterRequest;
-import com.hikmetsuicmez.komsu_connect.request.UserUpdateRequest;
+import com.hikmetsuicmez.komsu_connect.request.UserProfileRequest;
+import com.hikmetsuicmez.komsu_connect.response.UserProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,36 +32,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public RegisterRequest getCurrentUserProfile() {
+    public UserProfileResponse getCurrentUserProfile() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (user == null) {
             throw new UserNotFoundException("User not found");
         }
 
-        return UserMapper.toRegisterRequest(user);
+        return UserMapper.toUserProfileResponse(user);
     }
 
 
     @Override
-    public RegisterRequest updateUserProfile(UserUpdateRequest userUpdateRequest) {
+    public UserProfileResponse updateUserProfile(UserProfileRequest userProfileRequest) {
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findById(loggedInUser.getId())
                 .orElseThrow(() -> new UserNotFoundException("User Not Found: " + loggedInUser.getId()));
 
-        user.setFirstName(userUpdateRequest.getFirstName());
-        user.setLastName(userUpdateRequest.getLastName());
-        user.setEmail(userUpdateRequest.getEmail());
-        user.setNeighborhood(userUpdateRequest.getNeighborhood());
-        user.setPhoneNumber(userUpdateRequest.getPhoneNumber());
-
-        ServiceProfile serviceProfile = user.getServiceProfile();
-        serviceProfile.setServiceName(userUpdateRequest.getServiceProfileRequest().getServiceName());
-        serviceProfile.setDescription(userUpdateRequest.getServiceProfileRequest().getDescription());
-
-        serviceProfileRepository.save(serviceProfile);
+        user.setFirstName(userProfileRequest.getFirstName());
+        user.setLastName(userProfileRequest.getLastName());
+        user.setEmail(userProfileRequest.getEmail());
+        user.setNeighborhood(userProfileRequest.getNeighborhood());
+        user.setPhoneNumber(userProfileRequest.getPhoneNumber());
         userRepository.save(user);
 
-        return UserMapper.toRegisterRequest(user);
+        return UserMapper.toUserProfileResponse(user);
     }
 }

@@ -1,9 +1,9 @@
 package com.hikmetsuicmez.komsu_connect.controller;
 
 import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
-import com.hikmetsuicmez.komsu_connect.request.RegisterRequest;
-import com.hikmetsuicmez.komsu_connect.request.UserUpdateRequest;
+import com.hikmetsuicmez.komsu_connect.request.UserProfileRequest;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
+import com.hikmetsuicmez.komsu_connect.response.UserProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +25,16 @@ public class UserController extends RestBaseController {
     }
 
     @GetMapping("/me")
-    public ApiResponse<RegisterRequest> getCurrentUser() {
-        RegisterRequest registerRequest = userService.getCurrentUserProfile();
-        return ApiResponse.success(registerRequest);
+    public ApiResponse<UserProfileResponse> getCurrentUser() {
+        UserProfileResponse response = userService.getCurrentUserProfile();
+        return ApiResponse.success(response);
     }
 
 
     @PutMapping("/me")
-    public ApiResponse<RegisterRequest> updateUser(@RequestBody UserUpdateRequest request) {
-        RegisterRequest registerRequest = userService.updateUserProfile(request);
-        return ApiResponse.success(registerRequest);
+    public ApiResponse<UserProfileResponse> updateUser(@RequestBody UserProfileRequest request) {
+        UserProfileResponse response = userService.updateUserProfile(request);
+        return ApiResponse.success(response);
     }
 
 }
