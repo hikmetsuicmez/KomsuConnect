@@ -13,8 +13,13 @@ import java.util.List;
 @Builder
 public class BusinessProfileResponse {
 
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private String neighborhood;
     private String businessName;
     private String businessDescription;
-    private List<String> products;
+    private List<ProductResponse> products;
 }
 

@@ -12,6 +12,6 @@ public interface UserService {
 
     User getCurrentUser();
     List<UserSummary> retrieveAllUsers();
-    UserProfileResponse getCurrentUserProfile();
+    Object getCurrentUserProfile();
     UserProfileResponse updateUserProfile(UserProfileRequest userProfileRequest);
 }

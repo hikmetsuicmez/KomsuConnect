@@ -25,9 +25,8 @@ public class UserController extends RestBaseController {
     }
 
     @GetMapping("/me")
-    public ApiResponse<UserProfileResponse> getCurrentUser() {
-        UserProfileResponse response = userService.getCurrentUserProfile();
-        return ApiResponse.success(response);
+    public ApiResponse<?> getCurrentUser() {
+        return ApiResponse.success(userService.getCurrentUserProfile());
     }
 
 

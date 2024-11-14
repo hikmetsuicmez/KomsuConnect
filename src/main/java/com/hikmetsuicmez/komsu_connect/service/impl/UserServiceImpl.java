@@ -1,7 +1,10 @@
 package com.hikmetsuicmez.komsu_connect.service.impl;
 
+import com.hikmetsuicmez.komsu_connect.entity.BusinessProfile;
 import com.hikmetsuicmez.komsu_connect.entity.User;
+import com.hikmetsuicmez.komsu_connect.enums.UserRole;
 import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
+import com.hikmetsuicmez.komsu_connect.mapper.BusinessProfileMapper;
 import com.hikmetsuicmez.komsu_connect.mapper.UserMapper;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
 import com.hikmetsuicmez.komsu_connect.request.UserProfileRequest;
@@ -31,14 +34,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserProfileResponse getCurrentUserProfile() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public Object getCurrentUserProfile() {
+        User currentUser = getCurrentUser();
 
-        if (user == null) {
+        if (currentUser == null) {
             throw new UserNotFoundException("User not found");
         }
 
-        return userMapper.toUserProfileResponse(user);
+        if (currentUser.getRole() == UserRole.ROLE_USER) {
+            return userMapper.toUserProfileResponse(currentUser);
+        } else if (currentUser.getRole() == UserRole.ROLE_BUSINESS_OWNER) {
+            BusinessProfile businessProfile = currentUser.getBusinessProfile();
+            if (businessProfile == null) {
+                throw new NullPointerException("Business profile is null");
+            }
+            return BusinessProfileMapper.mapToBusinessProfileResponse(businessProfile);
+        }
+
+        throw new IllegalArgumentException("Invalid role type: " + currentUser.getRole());
     }
 
 

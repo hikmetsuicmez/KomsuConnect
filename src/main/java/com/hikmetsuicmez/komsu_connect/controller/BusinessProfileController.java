@@ -28,7 +28,6 @@ public class BusinessProfileController extends RestBaseController {
     }
 
 
-
     @PostMapping("/add-product")
     @PreAuthorize("hasRole('BUSINESS_OWNER')")
     public ApiResponse<String> addProduct(@RequestBody @Valid ProductRequest request) {

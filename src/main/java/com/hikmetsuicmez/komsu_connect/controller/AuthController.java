@@ -34,7 +34,6 @@ public class AuthController extends RestBaseController {
     }
 
 
-
     @PostMapping("/login")
     public ApiResponse<AuthResponse> login(@RequestBody AuthRequest request) {
         AuthResponse authResponse = authService.login(request);
