@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private boolean enabled = true;
 
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private BusinessProfile businessProfile;
 
     @Override

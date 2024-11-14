@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     public static final String LOGIN = "/auth/login";
-    public static final String REGISTER = "/auth/register";
+    public static final String REGISTER = "/auth/register/**";
     public static final String WEBSOCKET = "/ws/**";
     public static final String[] SWAGGER_PATHS = {
             "/swagger-ui/**",

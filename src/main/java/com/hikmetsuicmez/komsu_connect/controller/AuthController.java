@@ -21,15 +21,19 @@ public class AuthController extends RestBaseController {
 
     private final AuthService authService;
 
-    @PostMapping("/register")
+    @PostMapping("/register/user")
     public ApiResponse<String> register(@Valid @RequestBody RegisterRequest request) {
-        if (request instanceof BusinessOwnerRegisterRequest) {
-            authService.registerBusinessOwner((BusinessOwnerRegisterRequest) request);
-        } else {
-            authService.register(request);
-        }
+        authService.register(request);
         return ApiResponse.success("Registration successful.");
     }
+
+    @PostMapping("/register/business")
+    public ApiResponse<String> registerBusiness(@Valid @RequestBody BusinessOwnerRegisterRequest request) {
+        authService.registerBusinessOwner(request);
+        return ApiResponse.success("Registration successful.");
+    }
+
+
 
     @PostMapping("/login")
     public ApiResponse<AuthResponse> login(@RequestBody AuthRequest request) {

@@ -1,16 +1,12 @@
 package com.hikmetsuicmez.komsu_connect.request;
 
 import com.hikmetsuicmez.komsu_connect.enums.UserRole;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@Builder
 public class BusinessOwnerRegisterRequest extends RegisterRequest {
 
     @NotBlank(message = "Business name is required.")
@@ -20,12 +16,10 @@ public class BusinessOwnerRegisterRequest extends RegisterRequest {
     @Size(max = 255, message = "Business description cannot exceed 255 characters.")
     private String businessDescription;
 
-    BusinessOwnerRegisterRequest(@NotBlank(message = "First name cannot be blank.")
-                                 String firstName, @NotBlank(message = "Last name cannot be blank.")
-                                 String lastName, @NotBlank(message = "Email name cannot be blank.") @Email(message = "Email should be valid.")
-                                 String email, @NotBlank(message = "Password name cannot be blank.")
-                                 @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters.")
-                                 String password, String phoneNumber, UserRole role, @NotBlank(message = "Neighborhood cannot be blank.") String neighborhood) {
+
+    public BusinessOwnerRegisterRequest(String firstName, String lastName, String email, String password, String phoneNumber, UserRole role, String neighborhood, String businessName, String businessDescription) {
         super(firstName, lastName, email, password, phoneNumber, role, neighborhood);
+        this.businessName = businessName;
+        this.businessDescription = businessDescription;
     }
 }

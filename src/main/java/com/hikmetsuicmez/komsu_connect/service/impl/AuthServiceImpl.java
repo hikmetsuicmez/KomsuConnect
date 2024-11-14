@@ -2,6 +2,7 @@ package com.hikmetsuicmez.komsu_connect.service.impl;
 
 import com.hikmetsuicmez.komsu_connect.entity.BusinessProfile;
 import com.hikmetsuicmez.komsu_connect.enums.UserRole;
+import com.hikmetsuicmez.komsu_connect.repository.BusinessProfileRepository;
 import com.hikmetsuicmez.komsu_connect.request.AuthRequest;
 import com.hikmetsuicmez.komsu_connect.request.BusinessOwnerRegisterRequest;
 import com.hikmetsuicmez.komsu_connect.response.AuthResponse;
@@ -25,6 +26,7 @@ import java.util.Optional;
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
+    private final BusinessProfileRepository businessProfileRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationProvider authenticationProvider;
     private final JwtService jwtService;
@@ -68,14 +70,14 @@ public class AuthServiceImpl implements AuthService {
                 .enabled(true)
                 .build();
 
-        BusinessProfile businessProfile = BusinessProfile.builder()
-                .businessName(request.getBusinessName())
-                .businessDescription(request.getBusinessDescription())
-                .user(user)
-                .build();
+        BusinessProfile businessProfile = new BusinessProfile();
+        businessProfile.setBusinessName(request.getBusinessName());
+        businessProfile.setBusinessDescription(request.getBusinessDescription());
+        businessProfile.setUser(user);
 
         user.setBusinessProfile(businessProfile);
         userRepository.save(user);
+        businessProfileRepository.save(businessProfile);
         return "Business User registered successfully";
     }
 
