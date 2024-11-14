@@ -33,8 +33,11 @@ public class RegisterRequest {
         @NotBlank(message = "Neighborhood cannot be blank.")
         private String neighborhood;
 
+        @NotBlank(message = "Business name is required.")
+        @Size(min = 3, max = 50, message = "Business name must be between 3 and 50 characters.")
         private String businessName; // Sadece iş sahibi için
-        
+
+        @Size(max = 255, message = "Business description cannot exceed 255 characters.")
         private String businessDescription;
 
 }
