@@ -2,6 +2,7 @@ package com.hikmetsuicmez.komsu_connect.controller;
 
 import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
 import com.hikmetsuicmez.komsu_connect.request.AuthRequest;
+import com.hikmetsuicmez.komsu_connect.request.BusinessOwnerRegisterRequest;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
 import com.hikmetsuicmez.komsu_connect.response.AuthResponse;
 import com.hikmetsuicmez.komsu_connect.request.RegisterRequest;
@@ -22,8 +23,12 @@ public class AuthController extends RestBaseController {
 
     @PostMapping("/register")
     public ApiResponse<String> register(@Valid @RequestBody RegisterRequest request) {
-        String result = authService.register(request);
-        return ApiResponse.success(result);
+        if (request instanceof BusinessOwnerRegisterRequest) {
+            authService.registerBusinessOwner((BusinessOwnerRegisterRequest) request);
+        } else {
+            authService.register(request);
+        }
+        return ApiResponse.success("Registration successful.");
     }
 
     @PostMapping("/login")
