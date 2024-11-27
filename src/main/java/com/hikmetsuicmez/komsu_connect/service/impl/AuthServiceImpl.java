@@ -99,6 +99,7 @@ public class AuthServiceImpl implements AuthService {
                 .id(user.get().getId())
                 .firstName(user.get().getFirstName())
                 .lastName(user.get().getLastName())
+                .role(user.get().getRole().name())
                 .build();
 
         return new AuthResponse(token, "Login successful", userSummary);
