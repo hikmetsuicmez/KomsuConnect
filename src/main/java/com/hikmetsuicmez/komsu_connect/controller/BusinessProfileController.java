@@ -4,6 +4,7 @@ import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
 import com.hikmetsuicmez.komsu_connect.request.ProductRequest;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
 import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
+import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
 import com.hikmetsuicmez.komsu_connect.service.BusinessProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,4 +35,35 @@ public class BusinessProfileController extends RestBaseController {
         businessProfileService.addProduct(request);
         return ApiResponse.success("Product added successfully");
     }
+
+    @GetMapping("/products")
+    @PreAuthorize("hasRole('BUSINESS_OWNER')")
+    public ApiResponse<List<ProductResponse>> getProducts() {
+        List<ProductResponse> products = businessProfileService.getProductsForCurrentBusiness();
+        return ApiResponse.success(products);
+    }
+
+    @GetMapping("/{businessId}/products")
+    public ApiResponse<List<ProductResponse>> getProductsByBusinessId(@PathVariable Long businessId) {
+        List<ProductResponse> products = businessProfileService.getProductsByBusinessId(businessId);
+        return ApiResponse.success(products);
+    }
+
+    @PutMapping("/products/{productId}")
+    @PreAuthorize("hasRole('BUSINESS_OWNER')")
+    public ApiResponse<String> updateProduct(
+            @PathVariable Long productId,
+            @RequestBody @Valid ProductRequest request) {
+        businessProfileService.updateProduct(request,productId);
+        return ApiResponse.success("Product updated successfully");
+    }
+
+    @DeleteMapping("/products/{productId}")
+    @PreAuthorize("hasRole('BUSINESS_OWNER')")
+    public ApiResponse<String> deleteProduct(@PathVariable Long productId) {
+        businessProfileService.deleteProduct(productId);
+        return ApiResponse.success("Product deleted successfully");
+    }
+
 }
+
