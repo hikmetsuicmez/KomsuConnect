@@ -113,15 +113,20 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found with ID: " + productId));
 
-        if (!product.getBusinessProfile().getId().equals(currentUser.getId())) {
-            throw new AccessDeniedException("You do not have permission to delete this product.");
+        if (product.getBusinessProfile() == null || product.getBusinessProfile().getId() == null || currentUser.getId() == null) {
+            throw new AccessDeniedException("Invalid product or user information.");
         }
+
+        if (!product.getBusinessProfile().getId().equals(currentUser.getBusinessProfile().getId())) {
+            throw new AccessDeniedException("You do not have permission to update this product.");
+        }
+
 
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setDescription(request.getDescription());
 
         productRepository.save(product);
-
     }
+
 }
