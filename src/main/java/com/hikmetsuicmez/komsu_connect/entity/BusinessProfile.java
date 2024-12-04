@@ -19,6 +19,7 @@ public class BusinessProfile {
     private Long id;
     private String businessName;
     private String businessDescription;
+    private double rating;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
@@ -27,5 +28,7 @@ public class BusinessProfile {
     @OneToMany(mappedBy = "businessProfile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Product> products;
 
-
+    public String getNeighborhood() {
+        return user.getNeighborhood();
+    }
 }

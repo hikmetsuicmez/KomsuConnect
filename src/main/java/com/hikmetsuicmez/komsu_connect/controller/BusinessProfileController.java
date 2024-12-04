@@ -3,6 +3,7 @@ package com.hikmetsuicmez.komsu_connect.controller;
 import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
 import com.hikmetsuicmez.komsu_connect.request.ProductRequest;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
+import com.hikmetsuicmez.komsu_connect.response.BusinessDTO;
 import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
 import com.hikmetsuicmez.komsu_connect.service.BusinessProfileService;
@@ -24,7 +25,11 @@ public class BusinessProfileController extends RestBaseController {
     public ApiResponse<List<BusinessProfileResponse>> searchBusinesses(
             @RequestParam(required = false) String neighborhood,
             @RequestParam(required = false) String businessName) {
+
         List<BusinessProfileResponse> results = businessProfileService.searchBusinesses(neighborhood, businessName);
+        System.out.println("Gelen Neighborhood Parametresi: " + neighborhood);
+        System.out.println("Gelen businessName Parametresi: " + businessName);
+
         return ApiResponse.success(results);
     }
 
@@ -42,6 +47,13 @@ public class BusinessProfileController extends RestBaseController {
         List<ProductResponse> products = businessProfileService.getProductsForCurrentBusiness();
         return ApiResponse.success(products);
     }
+
+    @GetMapping("/public-businesses")
+    public ApiResponse<List<BusinessDTO>> getAllBusinesses() {
+        List<BusinessDTO> businesses = businessProfileService.getPublicBusinesses();
+        return ApiResponse.success(businesses);
+    }
+
 
     @GetMapping("/{businessId}/products")
     public ApiResponse<List<ProductResponse>> getProductsByBusinessId(@PathVariable Long businessId) {

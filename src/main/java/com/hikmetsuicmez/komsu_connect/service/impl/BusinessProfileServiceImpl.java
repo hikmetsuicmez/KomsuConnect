@@ -9,6 +9,7 @@ import com.hikmetsuicmez.komsu_connect.mapper.ProductMapper;
 import com.hikmetsuicmez.komsu_connect.repository.BusinessProfileRepository;
 import com.hikmetsuicmez.komsu_connect.repository.ProductRepository;
 import com.hikmetsuicmez.komsu_connect.request.ProductRequest;
+import com.hikmetsuicmez.komsu_connect.response.BusinessDTO;
 import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
 import com.hikmetsuicmez.komsu_connect.service.BusinessProfileService;
@@ -128,5 +129,19 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
 
         productRepository.save(product);
     }
+
+    @Override
+    public List<BusinessDTO> getPublicBusinesses() {
+        return businessProfileRepository.findAll().stream()
+                .map(business -> BusinessDTO.builder()
+                        .id(business.getId())
+                        .businessName(business.getBusinessName())
+                        .businessDescription(business.getBusinessDescription())
+                        .rating(business.getRating())
+                        .neighborhood(business.getNeighborhood())
+                        .build())
+                .toList();
+    }
+
 
 }

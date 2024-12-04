@@ -1,6 +1,7 @@
 package com.hikmetsuicmez.komsu_connect.service;
 
 import com.hikmetsuicmez.komsu_connect.request.ProductRequest;
+import com.hikmetsuicmez.komsu_connect.response.BusinessDTO;
 import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
 
@@ -14,4 +15,6 @@ public interface BusinessProfileService {
     List<ProductResponse> getProductsByBusinessId(Long businessId);
     void deleteProduct(Long productId);
     void updateProduct(ProductRequest request, Long productId);
+    List<BusinessDTO> getPublicBusinesses();
 }
+
