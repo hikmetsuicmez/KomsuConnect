@@ -4,6 +4,7 @@ import com.hikmetsuicmez.komsu_connect.entity.Notification;
 import com.hikmetsuicmez.komsu_connect.entity.User;
 import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
 import com.hikmetsuicmez.komsu_connect.repository.NotificationRepository;
+import com.hikmetsuicmez.komsu_connect.response.NotificationResponse;
 import com.hikmetsuicmez.komsu_connect.service.EmailService;
 import com.hikmetsuicmez.komsu_connect.service.NotificationService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +29,26 @@ public class NotificationServiceImpl implements NotificationService {
                 .user(user)
                 .message(message)
                 .timestamp(LocalDateTime.now())
+                .isRead(false)
                 .build();
         notificationRepository.save(notification);
 
         return notification;
+    }
+
+    @Override
+    public List<NotificationResponse> getUserNotification(User user) {
+        List<Notification> notifications = notificationRepository.findByUserAndIsReadFalseOrderByTimestampDesc(user);
+
+        return notifications.stream()
+                .map(notification -> NotificationResponse.builder()
+                        .id(notification.getId())
+                        .message(notification.getMessage())
+                        .timestamp(notification.getTimestamp())
+                        .isRead(notification.isRead())
+                        .build())
+                .toList();
+
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.hikmetsuicmez.komsu_connect.response.BusinessDTO;
 import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
 import com.hikmetsuicmez.komsu_connect.service.BusinessProfileService;
+import com.hikmetsuicmez.komsu_connect.service.NotificationService;
 import com.hikmetsuicmez.komsu_connect.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     private final ProductRepository productRepository;
     private final BusinessProfileRepository businessProfileRepository;
     private final RatingRepository ratingRepository;
+    private final NotificationService notificationService;
 
     @Override
     public BusinessDTO getBusinessProfileById(Long businessId) {
@@ -71,15 +73,16 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     public List<BusinessProfileResponse> searchBusinesses(String neighborhood, String businessName) {
         List<BusinessProfile> profiles;
 
-        if (neighborhood != null && businessName != null) {
+        if (neighborhood != null && !neighborhood.isEmpty() && businessName != null && !businessName.isEmpty()) {
             profiles = businessProfileRepository.findByUserNeighborhoodAndBusinessName(neighborhood, businessName);
-        } else if (neighborhood != null) {
+        } else if (neighborhood != null && !neighborhood.isEmpty()) {
             profiles = businessProfileRepository.findByUserNeighborhood(neighborhood);
-        } else if (businessName != null) {
+        } else if (businessName != null && !businessName.isEmpty()) {
             profiles = businessProfileRepository.findByBusinessNameContainingIgnoreCase(businessName);
         } else {
             profiles = businessProfileRepository.findAll();
         }
+
 
         return BusinessProfileMapper.mapToBusinessProfileResponseList(profiles);
     }
@@ -176,11 +179,16 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
             throw new IllegalArgumentException("You have already rated this business.");
         }
 
-            Rating newRating = new Rating();
-            newRating.setBusiness(businessProfile);
-            newRating.setUser(currentUser);
-            newRating.setRating(ratingValue);
-            ratingRepository.save(newRating);
+        Rating newRating = new Rating();
+        newRating.setBusiness(businessProfile);
+        newRating.setUser(currentUser);
+        newRating.setRating(ratingValue);
+        ratingRepository.save(newRating);
+
+        // Bildirim oluştur.
+        String message = "Kullanıcı " + currentUser.getUsername() + " işletmenize " + ratingValue + " puan verdi.";
+        notificationService.createNotification(businessProfile.getUser(), message);
+
     }
 
     @Override
