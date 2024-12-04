@@ -4,24 +4,25 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "products")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Product {
+public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String description;
-    private Double price;
-    private Double rating = 0.0;
+    @ManyToOne
+    @JoinColumn(name = "business_id", nullable = false)
+    private BusinessProfile business;
 
     @ManyToOne
-    @JoinColumn(name = "business_profile_id", nullable = false)
-    private BusinessProfile businessProfile;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    private Double rating;
+
 }

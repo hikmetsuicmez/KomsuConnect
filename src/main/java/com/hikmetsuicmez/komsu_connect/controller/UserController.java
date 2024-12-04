@@ -1,8 +1,6 @@
 package com.hikmetsuicmez.komsu_connect.controller;
 
 import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
-import com.hikmetsuicmez.komsu_connect.entity.User;
-import com.hikmetsuicmez.komsu_connect.mapper.UserMapper;
 import com.hikmetsuicmez.komsu_connect.request.EmailUpdateRequest;
 import com.hikmetsuicmez.komsu_connect.request.UserProfileRequest;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;

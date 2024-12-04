@@ -54,6 +54,18 @@ public class BusinessProfileController extends RestBaseController {
         return ApiResponse.success(businesses);
     }
 
+    @PostMapping("/{businessId}/rate")
+    public ApiResponse<String> rateBusiness(@PathVariable Long businessId, @RequestParam Double rating) {
+        businessProfileService.rateBusiness(businessId,rating);
+        return ApiResponse.success("Rate successfully");
+    }
+
+    @GetMapping("/{businessId}/average-rating")
+    public ApiResponse<Double> getAverageRating(@PathVariable Long businessId) {
+        Double averageRating = businessProfileService.calculateBusinessAverageRating(businessId);
+        return ApiResponse.success(averageRating);
+    }
+
 
     @GetMapping("/{businessId}/products")
     public ApiResponse<List<ProductResponse>> getProductsByBusinessId(@PathVariable Long businessId) {

@@ -19,7 +19,6 @@ public class BusinessProfile {
     private Long id;
     private String businessName;
     private String businessDescription;
-    private double rating;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

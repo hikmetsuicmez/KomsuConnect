@@ -16,5 +16,7 @@ public interface BusinessProfileService {
     void deleteProduct(Long productId);
     void updateProduct(ProductRequest request, Long productId);
     List<BusinessDTO> getPublicBusinesses();
+    void rateBusiness(Long businessId, Double ratingValue);
+    Double calculateBusinessAverageRating(Long businessId);
 }
 

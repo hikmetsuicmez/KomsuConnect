@@ -2,12 +2,15 @@ package com.hikmetsuicmez.komsu_connect.service.impl;
 
 import com.hikmetsuicmez.komsu_connect.entity.BusinessProfile;
 import com.hikmetsuicmez.komsu_connect.entity.Product;
+import com.hikmetsuicmez.komsu_connect.entity.Rating;
 import com.hikmetsuicmez.komsu_connect.entity.User;
 import com.hikmetsuicmez.komsu_connect.enums.UserRole;
+import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
 import com.hikmetsuicmez.komsu_connect.mapper.BusinessProfileMapper;
 import com.hikmetsuicmez.komsu_connect.mapper.ProductMapper;
 import com.hikmetsuicmez.komsu_connect.repository.BusinessProfileRepository;
 import com.hikmetsuicmez.komsu_connect.repository.ProductRepository;
+import com.hikmetsuicmez.komsu_connect.repository.RatingRepository;
 import com.hikmetsuicmez.komsu_connect.request.ProductRequest;
 import com.hikmetsuicmez.komsu_connect.response.BusinessDTO;
 import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
@@ -20,6 +23,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +32,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     private final UserService userService;
     private final ProductRepository productRepository;
     private final BusinessProfileRepository businessProfileRepository;
+    private final RatingRepository ratingRepository;
 
     @Override
     public void addProduct(ProductRequest request) {
@@ -137,10 +142,37 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
                         .id(business.getId())
                         .businessName(business.getBusinessName())
                         .businessDescription(business.getBusinessDescription())
-                        .rating(business.getRating())
                         .neighborhood(business.getNeighborhood())
                         .build())
                 .toList();
+    }
+
+    @Override
+    public void rateBusiness(Long businessId, Double ratingValue) {
+        BusinessProfile businessProfile = businessProfileRepository.findById(businessId)
+                .orElseThrow(() -> new UserNotFoundException("Business profile not found with ID: " + businessId));
+
+        User currentUser = userService.getCurrentUser();
+
+        Optional<Rating> existingRating = ratingRepository.findByBusinessAndUser(businessProfile, currentUser);
+
+        if (existingRating.isPresent()) {
+            Rating rating = existingRating.get();
+            rating.setRating(ratingValue);
+            ratingRepository.save(rating);
+        } else {
+            Rating newRating = new Rating();
+            newRating.setBusiness(businessProfile);
+            newRating.setUser(currentUser);
+            newRating.setRating(ratingValue);
+            ratingRepository.save(newRating);
+        }
+    }
+
+    @Override
+    public Double calculateBusinessAverageRating(Long businessId) {
+        Double averageRating = ratingRepository.calculateAverageRatingForBusiness(businessId);
+        return averageRating != null ? averageRating : 0.0;
     }
 
 
