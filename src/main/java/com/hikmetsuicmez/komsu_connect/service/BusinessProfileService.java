@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface BusinessProfileService {
 
+    BusinessDTO getBusinessProfileById(Long businessId);
     void addProduct(ProductRequest request);
     List<BusinessProfileResponse> searchBusinesses(String neighborhood, String businessName);
     List<ProductResponse> getProductsForCurrentBusiness();

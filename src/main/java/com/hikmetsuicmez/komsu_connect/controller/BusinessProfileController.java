@@ -33,6 +33,12 @@ public class BusinessProfileController extends RestBaseController {
         return ApiResponse.success(results);
     }
 
+    @GetMapping("/{businessId}")
+    public ApiResponse<BusinessDTO> getBusinessById(@PathVariable Long businessId) {
+        BusinessDTO businessDTO = businessProfileService.getBusinessProfileById(businessId);
+        return ApiResponse.success(businessDTO);
+    }
+
 
     @PostMapping("/add-product")
     @PreAuthorize("hasRole('BUSINESS_OWNER')")
@@ -54,8 +60,10 @@ public class BusinessProfileController extends RestBaseController {
         return ApiResponse.success(businesses);
     }
 
-    @PostMapping("/{businessId}/rate")
-    public ApiResponse<String> rateBusiness(@PathVariable Long businessId, @RequestParam Double rating) {
+    @PostMapping("/rate")
+    public ApiResponse<String> rateBusiness(
+            @RequestParam("businessId") Long businessId,
+            @RequestParam("rating") Double rating) {
         businessProfileService.rateBusiness(businessId,rating);
         return ApiResponse.success("Rate successfully");
     }

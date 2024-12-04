@@ -35,6 +35,21 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     private final RatingRepository ratingRepository;
 
     @Override
+    public BusinessDTO getBusinessProfileById(Long businessId) {
+        BusinessProfile businessProfile = businessProfileRepository.findById(businessId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        BusinessDTO businessDTO = new BusinessDTO();
+        businessDTO.setId(businessProfile.getId());
+        businessDTO.setBusinessName(businessProfile.getBusinessName());
+        businessDTO.setBusinessDescription(businessProfile.getBusinessDescription());
+        businessDTO.setNeighborhood(businessDTO.getNeighborhood());
+
+        return businessDTO;
+
+    }
+
+    @Override
     public void addProduct(ProductRequest request) {
         User currentUser = userService.getCurrentUser();
         if (currentUser.getRole() != UserRole.ROLE_BUSINESS_OWNER) {
@@ -143,6 +158,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
                         .businessName(business.getBusinessName())
                         .businessDescription(business.getBusinessDescription())
                         .neighborhood(business.getNeighborhood())
+                        .rating(ratingRepository.calculateAverageRatingForBusiness(business.getId()))
                         .build())
                 .toList();
     }
@@ -157,16 +173,14 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         Optional<Rating> existingRating = ratingRepository.findByBusinessAndUser(businessProfile, currentUser);
 
         if (existingRating.isPresent()) {
-            Rating rating = existingRating.get();
-            rating.setRating(ratingValue);
-            ratingRepository.save(rating);
-        } else {
+            throw new IllegalArgumentException("You have already rated this business.");
+        }
+
             Rating newRating = new Rating();
             newRating.setBusiness(businessProfile);
             newRating.setUser(currentUser);
             newRating.setRating(ratingValue);
             ratingRepository.save(newRating);
-        }
     }
 
     @Override

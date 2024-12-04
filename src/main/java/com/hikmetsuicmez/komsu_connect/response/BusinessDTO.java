@@ -11,7 +11,7 @@ public class BusinessDTO {
     private Long id;
     private String businessName;
     private String businessDescription;
-    private double rating;
+    private Double rating;
     private String neighborhood;
 
 }
