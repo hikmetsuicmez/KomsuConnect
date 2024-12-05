@@ -7,6 +7,7 @@ import com.hikmetsuicmez.komsu_connect.repository.NotificationRepository;
 import com.hikmetsuicmez.komsu_connect.response.NotificationResponse;
 import com.hikmetsuicmez.komsu_connect.service.EmailService;
 import com.hikmetsuicmez.komsu_connect.service.NotificationService;
+import com.hikmetsuicmez.komsu_connect.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
     private final EmailService emailService;
+    private final UserService userService;
 
     @Override
     public Notification createNotification(User user, String message) {
@@ -49,6 +51,12 @@ public class NotificationServiceImpl implements NotificationService {
                         .build())
                 .toList();
 
+    }
+
+    @Override
+    public Integer getUnreadNotificationCount() {
+        User currentUser = userService.getCurrentUser();
+        return notificationRepository.countByUserAndIsReadFalse(currentUser);
     }
 
     @Override

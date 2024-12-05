@@ -32,4 +32,10 @@ public class NotificationController extends RestBaseController {
         List<NotificationResponse> notifications = notificationService.getUserNotification(currentUser);
         return ApiResponse.success(notifications);
     }
+
+    @GetMapping("/unread-count")
+    public ApiResponse<Integer> getUnreadNotificationCount() {
+        Integer unreadCount = notificationService.getUnreadNotificationCount();
+        return ApiResponse.success(unreadCount);
+    }
 }
