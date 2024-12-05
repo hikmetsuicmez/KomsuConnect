@@ -11,6 +11,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor
 public class RegisterRequest {
 
         @NotBlank(message = "First name cannot be blank.")
