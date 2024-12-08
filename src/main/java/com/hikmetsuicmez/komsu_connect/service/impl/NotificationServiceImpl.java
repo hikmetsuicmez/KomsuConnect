@@ -83,7 +83,7 @@ public class NotificationServiceImpl implements NotificationService {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (!notification.getUser().getId().equals(currentUser.getId())) {
-            throw new AccessDeniedException("Only the recipient can mark this notification as read");
+            throw new IllegalArgumentException("Only the recipient can mark this notification as read");
         }
 
         notification.setRead(true);
