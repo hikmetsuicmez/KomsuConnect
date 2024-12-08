@@ -69,7 +69,8 @@ class UserControllerTest {
                     String responseBody = result.getResponse().getContentAsString();
                     ApiResponse<List<UserSummary>> response = objectMapper.readValue(
                             responseBody,
-                            new TypeReference<>() {}
+                            new TypeReference<>() {
+                            }
                     );
                     // Kontrollü loglama
                     System.out.println("Response Body: " + response.getData());
@@ -94,7 +95,8 @@ class UserControllerTest {
                     String responseBody = result.getResponse().getContentAsString();
                     ApiResponse<List<UserSummary>> response = objectMapper.readValue(
                             responseBody,
-                            new TypeReference<>() {}
+                            new TypeReference<>() {
+                            }
                     );
                     assertTrue(response.getData().isEmpty(), "Response should return an empty list.");
                 });
@@ -116,8 +118,8 @@ class UserControllerTest {
         mockMvc.perform(get("/api/users/me")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(result -> {
-                    String responseBody = result.getResponse().getContentAsString();
+                .andExpect(mvcResult -> {
+                    String responseBody = mvcResult.getResponse().getContentAsString();
                     assertTrue(responseBody.contains("John"), "Response should contain user's first name.");
                     assertTrue(responseBody.contains("Doe"), "Response should contain user's last name.");
                     assertTrue(responseBody.contains("USER"), "Response should contain user's role.");
@@ -197,8 +199,6 @@ class UserControllerTest {
                     assertTrue(responseBody.contains(successMessage), "Response should contain the success message.");
                 });
     }
-
-
 
 
 }

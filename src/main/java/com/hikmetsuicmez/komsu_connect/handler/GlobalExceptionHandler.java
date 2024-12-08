@@ -2,12 +2,14 @@ package com.hikmetsuicmez.komsu_connect.handler;
 
 import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -37,11 +39,10 @@ public class GlobalExceptionHandler {
     }
 
 
-
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleUserNotFoundException(WebRequest request, UserNotFoundException ex) throws UnknownHostException {
-
-        return new ResponseEntity<>(createNotFoundErrors(ex.getMessage(), request, ex), HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse<String>> handleUserNotFoundException(UserNotFoundException ex) {
+        ApiResponse<String> response = ApiResponse.error(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -51,6 +52,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiResponse<String>> handleIllegalStateException(IllegalStateException ex) {
+        ApiResponse<String> response = ApiResponse.error(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiResponse<String>> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        String errorMessage = "Invalid type for field: " + ex.getName();
+        ApiResponse<String> response = ApiResponse.error(errorMessage);
+        return ResponseEntity.badRequest().body(response);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAllOtherExceptions(Exception ex, WebRequest request) throws UnknownHostException {

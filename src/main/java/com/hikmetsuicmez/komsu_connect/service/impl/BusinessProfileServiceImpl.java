@@ -39,7 +39,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     @Override
     public BusinessDTO getBusinessProfileById(Long businessId) {
         BusinessProfile businessProfile = businessProfileRepository.findById(businessId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(UserNotFoundException::new);
 
         BusinessDTO businessDTO = new BusinessDTO();
         businessDTO.setId(businessProfile.getId());
@@ -71,8 +71,11 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
 
     @Override
     public List<BusinessProfileResponse> searchBusinesses(String neighborhood, String businessName) {
-        List<BusinessProfile> profiles;
+        if ((neighborhood == null || neighborhood.isEmpty()) && (businessName == null || businessName.isEmpty())) {
+            throw new IllegalArgumentException("Invalid search criteria");
+        }
 
+        List<BusinessProfile> profiles;
         if (neighborhood != null && !neighborhood.isEmpty() && businessName != null && !businessName.isEmpty()) {
             profiles = businessProfileRepository.findByUserNeighborhoodAndBusinessName(neighborhood, businessName);
         } else if (neighborhood != null && !neighborhood.isEmpty()) {
@@ -83,9 +86,9 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
             profiles = businessProfileRepository.findAll();
         }
 
-
         return BusinessProfileMapper.mapToBusinessProfileResponseList(profiles);
     }
+
 
     @Override
     public List<ProductResponse> getProductsForCurrentBusiness() {
@@ -135,7 +138,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         User currentUser = userService.getCurrentUser();
 
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found with ID: " + productId));
+                .orElseThrow(() -> new UserNotFoundException("Product not found with ID: " + productId));
 
         if (product.getBusinessProfile() == null || product.getBusinessProfile().getId() == null || currentUser.getId() == null) {
             throw new AccessDeniedException("Invalid product or user information.");

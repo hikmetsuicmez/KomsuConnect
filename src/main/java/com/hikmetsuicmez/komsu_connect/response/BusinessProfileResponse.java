@@ -19,5 +19,7 @@ public class BusinessProfileResponse {
     private String businessName;
     private String businessDescription;
     private List<ProductResponse> products;
+
+
 }
 

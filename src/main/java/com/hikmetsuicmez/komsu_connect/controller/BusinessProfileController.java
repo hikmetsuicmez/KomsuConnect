@@ -8,6 +8,10 @@ import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
 import com.hikmetsuicmez.komsu_connect.service.BusinessProfileService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -62,9 +66,9 @@ public class BusinessProfileController extends RestBaseController {
 
     @PostMapping("/rate")
     public ApiResponse<String> rateBusiness(
-            @RequestParam("businessId") Long businessId,
-            @RequestParam("rating") Double rating) {
-        businessProfileService.rateBusiness(businessId,rating);
+            @RequestParam("businessId") @Valid @NotNull @Positive(message = "Invalid business ID") Long businessId,
+            @RequestParam("rating") @Valid @NotNull @DecimalMin("0.0") @DecimalMax("5.0") Double rating) {
+        businessProfileService.rateBusiness(businessId, rating);
         return ApiResponse.success("Rate successfully");
     }
 
@@ -86,7 +90,7 @@ public class BusinessProfileController extends RestBaseController {
     public ApiResponse<String> updateProduct(
             @PathVariable Long productId,
             @RequestBody @Valid ProductRequest request) {
-        businessProfileService.updateProduct(request,productId);
+        businessProfileService.updateProduct(request, productId);
         return ApiResponse.success("Product updated successfully");
     }
 

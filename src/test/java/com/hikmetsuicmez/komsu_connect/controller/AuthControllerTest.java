@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class AuthControllerTest {
 
+
     @InjectMocks
     private AuthController authController;
 
@@ -79,7 +80,6 @@ class AuthControllerTest {
     }
 
 
-
     @Test
     void shouldReturnErrorForInvalidCredentials() throws Exception {
         // Arrange
@@ -119,7 +119,6 @@ class AuthControllerTest {
                     assertTrue(responseBody.contains("\"email\":\"Email must not be blank\""), "Response should indicate email is missing.");
                 });
     }
-
 
 
     @Test
