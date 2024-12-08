@@ -33,9 +33,8 @@ public class AuthController extends RestBaseController {
         return ApiResponse.success("Registration successful.");
     }
 
-
     @PostMapping("/login")
-    public ApiResponse<AuthResponse> login(@RequestBody AuthRequest request) {
+    public ApiResponse<AuthResponse> login(@RequestBody @Valid AuthRequest request) {
         AuthResponse authResponse = authService.login(request);
         return ApiResponse.success(authResponse);
     }

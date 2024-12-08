@@ -1,13 +1,13 @@
 package com.hikmetsuicmez.komsu_connect.response;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserSummary {
     private Long id;
     private String firstName;

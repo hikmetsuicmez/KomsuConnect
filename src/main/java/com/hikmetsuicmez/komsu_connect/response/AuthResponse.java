@@ -6,4 +6,5 @@ public record AuthResponse(
         UserSummary userSummary
 ) {
 
+
 }

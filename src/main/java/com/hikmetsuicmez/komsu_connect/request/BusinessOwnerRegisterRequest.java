@@ -7,6 +7,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BusinessOwnerRegisterRequest extends RegisterRequest {
 
     @NotBlank(message = "Business name is required.")

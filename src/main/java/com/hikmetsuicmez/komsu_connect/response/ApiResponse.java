@@ -11,6 +11,8 @@ public class ApiResponse<T> {
     private String errorMessage;
     private T data;
 
+
+
     public static <T> ApiResponse<T> success(T data) {
         ApiResponse<T> result = new ApiResponse<T>();
         result.setResult(true);
