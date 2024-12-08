@@ -1,9 +1,6 @@
 package com.hikmetsuicmez.komsu_connect.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,6 +8,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class BusinessProfileResponse {
 
     private String firstName;
