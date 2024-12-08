@@ -2,6 +2,7 @@ package com.hikmetsuicmez.komsu_connect.handler;
 
 import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -65,6 +67,17 @@ public class GlobalExceptionHandler {
         ApiResponse<String> response = ApiResponse.error(errorMessage);
         return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ResponseEntity<ApiResponse<String>> handleConstraintViolation(ConstraintViolationException ex) {
+        String errorMessage = ex.getConstraintViolations()
+                .stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.joining(", "));
+        ApiResponse<String> response = ApiResponse.error(errorMessage);
+        return ResponseEntity.badRequest().body(response);
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAllOtherExceptions(Exception ex, WebRequest request) throws UnknownHostException {
