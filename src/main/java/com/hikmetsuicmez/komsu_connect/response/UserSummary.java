@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserSummary {
+
     private Long id;
     private String firstName;
     private String lastName;

@@ -98,6 +98,10 @@ public class MessageServiceImpl implements MessageService {
         message.setReadTimestamp(LocalDateTime.now());
         messageRepository.save(message);
 
-        brokerMessagingTemplate.convertAndSend("/topic/messages/" + message.getSender().getId(), "Mesaj okundu: " + messageId);
+        brokerMessagingTemplate
+                .convertAndSend("/topic/messages/" + message.getSender().getId(), "Mesaj okundu: " + messageId);
     }
+
+
+
 }
