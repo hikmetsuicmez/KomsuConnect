@@ -20,6 +20,9 @@ public class BusinessProfile {
     private String businessName;
     private String businessDescription;
 
+    @Column(name = "photo_url")
+    private String photoUrl;
+
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;

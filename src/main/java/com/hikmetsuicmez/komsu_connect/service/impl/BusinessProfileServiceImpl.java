@@ -22,9 +22,15 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +41,8 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     private final BusinessProfileRepository businessProfileRepository;
     private final RatingRepository ratingRepository;
     private final NotificationService notificationService;
+    private final String uploadDir = "/uploads/business-profiles/";
+
 
     @Override
     public BusinessDTO getBusinessProfileById(Long businessId) {
@@ -71,11 +79,13 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
 
     @Override
     public List<BusinessProfileResponse> searchBusinesses(String neighborhood, String businessName) {
-        if ((neighborhood == null || neighborhood.isEmpty()) && (businessName == null || businessName.isEmpty())) {
-            throw new IllegalArgumentException("Invalid search criteria");
-        }
+
 
         List<BusinessProfile> profiles;
+
+        if ((neighborhood == null || neighborhood.isEmpty()) && (businessName == null || businessName.isEmpty())) {
+            profiles = businessProfileRepository.findAll();
+        }
         if (neighborhood != null && !neighborhood.isEmpty() && businessName != null && !businessName.isEmpty()) {
             profiles = businessProfileRepository.findByUserNeighborhoodAndBusinessName(neighborhood, businessName);
         } else if (neighborhood != null && !neighborhood.isEmpty()) {
@@ -164,6 +174,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
                         .businessName(business.getBusinessName())
                         .businessDescription(business.getBusinessDescription())
                         .neighborhood(business.getNeighborhood())
+                        .photoUrl(business.getPhotoUrl())
                         .rating(ratingRepository.calculateAverageRatingForBusiness(business.getId()))
                         .build())
                 .toList();
@@ -198,6 +209,37 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     public Double calculateBusinessAverageRating(Long businessId) {
         Double averageRating = ratingRepository.calculateAverageRatingForBusiness(businessId);
         return averageRating != null ? averageRating : 0.0;
+    }
+
+    @Override
+    public String saveBusinessPhoto(Long businessId, MultipartFile file) {
+        BusinessProfile businessProfile = businessProfileRepository.findById(businessId)
+                .orElseThrow(() -> new UserNotFoundException("Business Not Found"));
+
+        if (!isSupportedFileFormat(file)) {
+            throw new IllegalArgumentException("Unsupported file format. Only JPEG and PNG.");
+        }
+
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+
+        Path filePath = Paths.get(uploadDir + fileName);
+        try {
+            Files.createDirectories(filePath.getParent());
+            file.transferTo(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save file",e);
+        }
+
+        String photoUrl = "/uploads/business-profiles/" + fileName;
+        businessProfile.setPhotoUrl(photoUrl);
+        businessProfileRepository.save(businessProfile);
+
+        return photoUrl;
+    }
+
+    private boolean isSupportedFileFormat(MultipartFile file) {
+        String contentType = file.getContentType();
+        return "image/jpeg".equals(contentType) || "image/png".equals(contentType);
     }
 
 

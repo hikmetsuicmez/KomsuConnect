@@ -11,12 +11,14 @@ import java.util.List;
 @NoArgsConstructor
 public class BusinessProfileResponse {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
     private String neighborhood;
     private String businessName;
+    private String photoUrl;
     private String businessDescription;
     private List<ProductResponse> products;
 

@@ -2,6 +2,7 @@ package com.hikmetsuicmez.komsu_connect.controller;
 
 import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
+import com.hikmetsuicmez.komsu_connect.response.MessageDTO;
 import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import jakarta.validation.Valid;
@@ -19,8 +20,9 @@ public class MessageController extends RestBaseController {
     private final MessageService messageService;
 
     @PostMapping("/send/{receiverId}")
-    public ApiResponse<MessageResponse> sendMessage(@PathVariable Long receiverId, @Valid @RequestBody String content) {
-        return ApiResponse.success(messageService.sendMessage(receiverId, content));
+    public ApiResponse<MessageDTO> sendMessage(@PathVariable Long receiverId, @Valid @RequestBody String content) {
+        MessageDTO response = messageService.sendMessage(receiverId, content);
+        return ApiResponse.success(response);
     }
 
     @GetMapping("/history/{userId}")

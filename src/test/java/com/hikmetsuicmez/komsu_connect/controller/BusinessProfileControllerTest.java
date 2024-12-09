@@ -260,8 +260,8 @@ class BusinessProfileControllerTest {
     @Test
     void shouldReturnListOfPublicBusinessesSuccessfully() throws Exception {
         // Arrange
-        BusinessDTO business1 = new BusinessDTO(1L, "Business 1", "Description 1", 4.2, "Neighborhood 1");
-        BusinessDTO business2 = new BusinessDTO(2L, "Business 2", "Description 2", 4.7, "Neighborhood 2");
+        BusinessDTO business1 = new BusinessDTO(1L, "Business 1", "Description 1", 4.2,"l","Neighborhood 1");
+        BusinessDTO business2 = new BusinessDTO(2L, "Business 2", "Description 2", 4.7,"a", "Neighborhood 2");
         List<BusinessDTO> mockBusinesses = List.of(business1, business2);
 
         when(businessProfileService.getPublicBusinesses()).thenReturn(mockBusinesses);

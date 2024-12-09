@@ -11,6 +11,7 @@ public class BusinessProfileMapper {
     public static BusinessProfileResponse mapToBusinessProfileResponse(BusinessProfile businessProfile) {
 
         return BusinessProfileResponse.builder()
+                .id(businessProfile.getId())
                 .firstName(businessProfile.getUser().getFirstName())
                 .lastName(businessProfile.getUser().getLastName())
                 .email(businessProfile.getUser().getEmail())
@@ -18,6 +19,7 @@ public class BusinessProfileMapper {
                 .neighborhood(businessProfile.getUser().getNeighborhood())
                 .businessName(businessProfile.getBusinessName())
                 .businessDescription(businessProfile.getBusinessDescription())
+                .photoUrl(businessProfile.getPhotoUrl())
                 .products(businessProfile.getProducts().stream()
                         .map(product -> ProductResponse.builder()
                                 .name(product.getName())

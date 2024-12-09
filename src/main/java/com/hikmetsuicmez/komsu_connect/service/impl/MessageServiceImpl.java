@@ -6,6 +6,7 @@ import com.hikmetsuicmez.komsu_connect.exception.UserNotFoundException;
 import com.hikmetsuicmez.komsu_connect.mapper.MessageMapper;
 import com.hikmetsuicmez.komsu_connect.repository.MessageRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
+import com.hikmetsuicmez.komsu_connect.response.MessageDTO;
 import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import com.hikmetsuicmez.komsu_connect.service.NotificationService;
@@ -29,11 +30,12 @@ public class MessageServiceImpl implements MessageService {
     private final SimpMessagingTemplate brokerMessagingTemplate;
 
     @Override
-    public MessageResponse sendMessage(Long receiverId, String content) {
+    public MessageDTO sendMessage(Long receiverId, String content) {
         User sender = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User receiver = userRepository.findById(receiverId)
                 .orElseThrow(() -> new UserNotFoundException("User with ID " + receiverId + " not found"));
 
+        // Mesaj oluştur
         Message message = Message.builder()
                 .sender(sender)
                 .receiver(receiver)
@@ -42,13 +44,34 @@ public class MessageServiceImpl implements MessageService {
                 .isRead(false)
                 .build();
 
+        // Mesajı kaydet
         Message savedMessage = messageRepository.save(message);
-        brokerMessagingTemplate.convertAndSend("/topic/messages/" + receiverId, savedMessage);
+
+        // WebSocket üzerinden gönder
+        brokerMessagingTemplate.convertAndSend(
+                "/topic/messages/" + receiverId,
+                MessageDTO.builder()
+                        .id(savedMessage.getId())
+                        .senderName(sender.getFirstName())
+                        .receiverName(receiver.getFirstName())
+                        .content(content)
+                        .timestamp(savedMessage.getTimestamp())
+                        .build()
+        );
+
+        // Notification (opsiyonel)
         notificationService.sendNewMessageNotification(sender, receiver, content);
 
-        return MessageMapper.toMessageResponse(savedMessage);
-
+        // DTO'ya çevir ve dön
+        return MessageDTO.builder()
+                .id(savedMessage.getId())
+                .senderName(sender.getFirstName())
+                .receiverName(receiver.getFirstName())
+                .content(savedMessage.getContent())
+                .timestamp(savedMessage.getTimestamp())
+                .build();
     }
+
 
     @Override
     public List<MessageResponse> getConversationBetweenUsers(Long userId, Long selectedUserId) {

@@ -37,6 +37,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth
+                                .requestMatchers("/uploads/**").permitAll()
                                 .requestMatchers(LOGIN,REGISTER).permitAll()
                                 .requestMatchers(SWAGGER_PATHS).permitAll()
                                 .requestMatchers(WEBSOCKET).permitAll()

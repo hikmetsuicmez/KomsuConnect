@@ -13,14 +13,17 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/business")
 @RequiredArgsConstructor
+@Slf4j
 public class BusinessProfileController extends RestBaseController {
 
     private final BusinessProfileService businessProfileService;
@@ -100,6 +103,16 @@ public class BusinessProfileController extends RestBaseController {
         businessProfileService.deleteProduct(productId);
         return ApiResponse.success("Product deleted successfully");
     }
+
+    @PostMapping("/{businessId}/upload-photo")
+    public ApiResponse<?> uploadPhoto(
+            @PathVariable Long businessId,
+            @RequestParam("file") MultipartFile file) {
+        log.info("Business ID: {}", businessId);
+        String photoUrl = businessProfileService.saveBusinessPhoto(businessId, file);
+        return ApiResponse.success(photoUrl);
+    }
+
 
 }
 
