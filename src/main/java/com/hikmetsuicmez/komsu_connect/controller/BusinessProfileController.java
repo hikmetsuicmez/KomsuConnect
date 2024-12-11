@@ -2,10 +2,7 @@ package com.hikmetsuicmez.komsu_connect.controller;
 
 import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
 import com.hikmetsuicmez.komsu_connect.request.ProductRequest;
-import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
-import com.hikmetsuicmez.komsu_connect.response.BusinessDTO;
-import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
-import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
+import com.hikmetsuicmez.komsu_connect.response.*;
 import com.hikmetsuicmez.komsu_connect.service.BusinessProfileService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMax;
@@ -46,6 +43,11 @@ public class BusinessProfileController extends RestBaseController {
         return ApiResponse.success(businessDTO);
     }
 
+    @GetMapping("/{businessId}/owner")
+    public ApiResponse<UserSummary> getBusinessOwner(@PathVariable Long businessId) {
+        UserSummary businessOwner = businessProfileService.getBusinessOwner(businessId);
+        return ApiResponse.success(businessOwner);
+    }
 
     @PostMapping("/add-product")
     @PreAuthorize("hasRole('BUSINESS_OWNER')")

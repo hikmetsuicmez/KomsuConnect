@@ -15,6 +15,7 @@ import com.hikmetsuicmez.komsu_connect.request.ProductRequest;
 import com.hikmetsuicmez.komsu_connect.response.BusinessDTO;
 import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
+import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.service.BusinessProfileService;
 import com.hikmetsuicmez.komsu_connect.service.NotificationService;
 import com.hikmetsuicmez.komsu_connect.service.UserService;
@@ -57,6 +58,21 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
 
         return businessDTO;
 
+    }
+
+    @Override
+    public UserSummary getBusinessOwner(Long businessId) {
+        Optional<BusinessProfile> businessProfile = businessProfileRepository.findById(businessId);
+        if (businessProfile.isEmpty()) {
+            throw new UserNotFoundException("Business profile not found.");
+        }
+        User owner = businessProfile.get().getUser();
+
+        return UserSummary.builder()
+                .id(owner.getId())
+                .firstName(owner.getFirstName())
+                .lastName(owner.getLastName())
+                .build();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.hikmetsuicmez.komsu_connect.request.ProductRequest;
 import com.hikmetsuicmez.komsu_connect.response.BusinessDTO;
 import com.hikmetsuicmez.komsu_connect.response.BusinessProfileResponse;
 import com.hikmetsuicmez.komsu_connect.response.ProductResponse;
+import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public interface BusinessProfileService {
 
     BusinessDTO getBusinessProfileById(Long businessId);
+    UserSummary getBusinessOwner(Long businessId);
     void addProduct(ProductRequest request);
     List<BusinessProfileResponse> searchBusinesses(String neighborhood, String businessName);
     List<ProductResponse> getProductsForCurrentBusiness();
