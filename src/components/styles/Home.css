@@ -1,0 +1,139 @@
+/* Genel */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #E6E6E6;
+    background: linear-gradient(to bottom right, #1B1B1B, #2E2E2E);
+    height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #121212;
+    border-bottom: 2px solid #3A3A3A;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #85B582;
+    transition: color 0.3s;
+}
+
+.navbar-brand:hover {
+    color: #A9CF9F;
+}
+
+.navbar-nav .nav-link {
+    color: #D1D1D1;
+    transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #85B582;
+}
+
+/* Hero Bölümü */
+.home-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    height: calc(100vh - 100px);
+}
+
+.home-hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.home-hero-text {
+    font-size: 1.5rem;
+    color: #CCCCCC;
+    margin-top: -10px;
+}
+
+.home-hero-description {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    line-height: 1.5;
+    color: #85B582;
+}
+
+.home-hero-buttons {
+    margin-top: 30px;
+}
+
+.home-button {
+    background-color: #85B582;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: #5A9458;
+}
+
+.home-button-secondary {
+    background-color: transparent;
+    color: #85B582;
+    border: 2px solid #85B582;
+    transition: all 0.3s;
+}
+
+.home-button-secondary:hover {
+    background-color: #85B582;
+    color: white;
+}
+
+/* Footer */
+footer {
+    background-color: #121212;
+    color: #E6E6E6;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #85B582;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+footer a:hover {
+    color: white;
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+    .home-container {
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+
+    .home-hero-title {
+        font-size: 2rem;
+    }
+
+    .home-hero-description {
+        font-size: 1rem;
+    }
+
+    .home-button {
+        width: 100%;
+    }
+}
