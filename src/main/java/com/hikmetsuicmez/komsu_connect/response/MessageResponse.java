@@ -17,4 +17,5 @@ public class MessageResponse {
     private UserSummary receiver;
     private String content;
     private LocalDateTime timestamp;
+    private String businessName;
 }

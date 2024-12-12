@@ -23,5 +23,7 @@ public interface BusinessProfileService {
     void rateBusiness(Long businessId, Double ratingValue);
     Double calculateBusinessAverageRating(Long businessId);
     String saveBusinessPhoto(Long businessId, MultipartFile file);
+    String saveProductPhoto(Long productId, MultipartFile file);
+
 }
 

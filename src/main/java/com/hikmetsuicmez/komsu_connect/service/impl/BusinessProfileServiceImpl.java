@@ -43,6 +43,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
     private final RatingRepository ratingRepository;
     private final NotificationService notificationService;
     private final String uploadDir = "/uploads/business-profiles/";
+    private final String uploadProductDir = "/uploads/products/";
 
 
     @Override
@@ -252,6 +253,34 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
 
         return photoUrl;
     }
+
+
+    @Override
+    public String saveProductPhoto(Long productId, MultipartFile file) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product Not Found"));
+
+        if (!isSupportedFileFormat(file)) {
+            throw new IllegalArgumentException("Unsupported file format. Only JPEG and PNG.");
+        }
+
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path filePath = Paths.get(uploadProductDir + fileName);
+
+        try {
+            Files.createDirectories(filePath.getParent());
+            file.transferTo(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save file", e);
+        }
+
+        String photoUrl = "/uploads/products/" + fileName;
+        product.setPhotoUrl(photoUrl);
+        productRepository.save(product);
+
+        return photoUrl;
+    }
+
 
     private boolean isSupportedFileFormat(MultipartFile file) {
         String contentType = file.getContentType();

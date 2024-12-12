@@ -12,4 +12,6 @@ public interface MessageService {
     List<MessageResponse> getMessageHistory(Long userId);
     List<MessageResponse> getInboxMessages();
     void markAsRead(Long messageId);
+    MessageResponse getOrCreateConversation(Long userId, Long selectedUserId);
+
 }

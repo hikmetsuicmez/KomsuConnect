@@ -8,9 +8,12 @@ import com.hikmetsuicmez.komsu_connect.repository.MessageRepository;
 import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
 import com.hikmetsuicmez.komsu_connect.response.MessageDTO;
 import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
+import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import com.hikmetsuicmez.komsu_connect.service.NotificationService;
+import com.hikmetsuicmez.komsu_connect.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
@@ -44,10 +48,8 @@ public class MessageServiceImpl implements MessageService {
                 .isRead(false)
                 .build();
 
-        // Mesajı kaydet
         Message savedMessage = messageRepository.save(message);
 
-        // WebSocket üzerinden gönder
         brokerMessagingTemplate.convertAndSend(
                 "/topic/messages/" + receiverId,
                 MessageDTO.builder()
@@ -59,10 +61,8 @@ public class MessageServiceImpl implements MessageService {
                         .build()
         );
 
-        // Notification (opsiyonel)
         notificationService.sendNewMessageNotification(sender, receiver, content);
 
-        // DTO'ya çevir ve dön
         return MessageDTO.builder()
                 .id(savedMessage.getId())
                 .senderName(sender.getFirstName())
@@ -125,6 +125,35 @@ public class MessageServiceImpl implements MessageService {
                 .convertAndSend("/topic/messages/" + message.getSender().getId(), "Mesaj okundu: " + messageId);
     }
 
+    public MessageResponse getOrCreateConversation(Long userId, Long selectedUserId) {
+        List<Message> messages = messageRepository.findConversationBetweenUsers(userId, selectedUserId);
+
+        if (!messages.isEmpty()) {
+            Message latestMessage = messages.get(messages.size() - 1);
+            return MessageResponse.builder()
+                    .id(latestMessage.getId())
+                    .sender(new UserSummary(latestMessage.getSender().getId(), latestMessage.getSender().getFirstName()))
+                    .receiver(new UserSummary(latestMessage.getReceiver().getId(), latestMessage.getReceiver().getFirstName()))
+                    .content(latestMessage.getContent())
+                    .timestamp(latestMessage.getTimestamp())
+                    .businessName(latestMessage.getReceiver().getBusinessProfile().getBusinessName() != null
+                            ? latestMessage.getReceiver().getBusinessProfile().getBusinessName()
+                            : latestMessage.getSender().getBusinessProfile().getBusinessName())
+                    .build();
+
+        }
+
+        User sender = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User receiver = userRepository.findById(selectedUserId).orElseThrow(() -> new RuntimeException("User not found"));
+
+        return MessageResponse.builder()
+                .id(null)
+                .sender(new UserSummary(sender.getId(), sender.getFirstName()))
+                .receiver(new UserSummary(receiver.getId(), receiver.getFirstName()))
+                .content("No messages yet")
+                .timestamp(null)
+                .build();
+    }
 
 
 }

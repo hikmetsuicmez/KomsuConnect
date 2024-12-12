@@ -12,7 +12,6 @@ import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
 import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.security.JwtService;
 import com.hikmetsuicmez.komsu_connect.service.AuthService;
-import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

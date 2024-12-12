@@ -4,6 +4,7 @@ import com.hikmetsuicmez.komsu_connect.controller.base.RestBaseController;
 import com.hikmetsuicmez.komsu_connect.response.ApiResponse;
 import com.hikmetsuicmez.komsu_connect.response.MessageDTO;
 import com.hikmetsuicmez.komsu_connect.response.MessageResponse;
+import com.hikmetsuicmez.komsu_connect.response.UserSummary;
 import com.hikmetsuicmez.komsu_connect.service.MessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,32 @@ public class MessageController extends RestBaseController {
             @PathVariable Long userId,
             @PathVariable Long selectedUserId) {
         List<MessageResponse> messages = messageService.getConversationBetweenUsers(userId, selectedUserId);
+
+        if (messages.isEmpty()) {
+            MessageResponse emptyConversation = MessageResponse.builder()
+                    .id(null)
+                    .sender(new UserSummary(userId, "SenderName"))
+                    .receiver(new UserSummary(selectedUserId, "ReceiverName"))
+                    .content("No messages yet")
+                    .timestamp(null)
+                    .build();
+
+            messages = List.of(emptyConversation);
+        }
+
         return ApiResponse.success(messages);
     }
+
+    @GetMapping("/conversation-or-create/{userId}/{selectedUserId}")
+    public ApiResponse<MessageResponse> getOrCreateConversation(
+            @PathVariable Long userId,
+            @PathVariable Long selectedUserId) {
+        MessageResponse conversation = messageService.getOrCreateConversation(userId, selectedUserId);
+
+        return ApiResponse.success(conversation);
+    }
+
+
+
 
 }

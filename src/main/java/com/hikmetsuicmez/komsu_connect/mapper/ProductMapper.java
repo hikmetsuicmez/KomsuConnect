@@ -11,6 +11,7 @@ public class ProductMapper {
                 .name(product.getName())
                 .price(product.getPrice())
                 .description(product.getDescription())
+                .photoUrl(product.getPhotoUrl())
                 .build();
     }
 }

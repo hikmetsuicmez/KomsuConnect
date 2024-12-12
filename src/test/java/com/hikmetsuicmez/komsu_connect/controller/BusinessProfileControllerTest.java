@@ -220,8 +220,8 @@ class BusinessProfileControllerTest {
     @Test
     void shouldRetrieveAllProductsSuccessfully() throws Exception {
         // Arrange
-        ProductResponse product1 = new ProductResponse(1L, "Product 1", "Description 1", 9.99);
-        ProductResponse product2 = new ProductResponse(2L, "Product 2", "Description 2", 19.99);
+        ProductResponse product1 = new ProductResponse(1L, "Product 1", "Description 1", 9.99,"1");
+        ProductResponse product2 = new ProductResponse(2L, "Product 2", "Description 2", 19.99,"1");
         List<ProductResponse> mockProducts = List.of(product1, product2);
 
         when(businessProfileService.getProductsForCurrentBusiness()).thenReturn(mockProducts);
@@ -437,8 +437,8 @@ class BusinessProfileControllerTest {
         // Arrange
         Long validBusinessId = 1L;
         List<ProductResponse> mockProducts = List.of(
-                new ProductResponse(1L, "Product 1", "Description 1", 10.99),
-                new ProductResponse(2L, "Product 2", "Description 2", 15.49)
+                new ProductResponse(1L, "Product 1", "Description 1", 10.99,"1"),
+                new ProductResponse(2L, "Product 2", "Description 2", 15.49,"1")
         );
 
         when(businessProfileService.getProductsByBusinessId(validBusinessId)).thenReturn(mockProducts);

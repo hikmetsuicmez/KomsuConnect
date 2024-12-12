@@ -2,7 +2,6 @@ package com.hikmetsuicmez.komsu_connect.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.List;
 
 @Entity
