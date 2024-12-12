@@ -1,0 +1,55 @@
+.notification-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #ffffff;
+    /* Arka planı tam opak beyaz yapıyoruz */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.notification-card:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+
+.notification-card.read {
+    background-color: #f0f0f0;
+    /* Okunmuş mesajlar için hafif gri */
+}
+
+.notification-card.unread {
+    background-color: #ffffff;
+    /* Okunmamış mesajlar için opak beyaz */
+    border-left: 4px solid #4CAF50;
+    /* Yeşil bir şerit ekleyerek vurgulama */
+}
+
+.notification-card h3 {
+    font-size: 16px;
+    color: #333333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.notification-card p {
+    font-size: 14px;
+    color: #555555;
+}
+
+.notification-card .timestamp {
+    font-size: 12px;
+    color: #999999;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.timestamp {
+    font-size: 25px;
+    color: #999;
+    text-align: right;
+}
