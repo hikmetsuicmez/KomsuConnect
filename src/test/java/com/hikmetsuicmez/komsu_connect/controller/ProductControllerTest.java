@@ -33,7 +33,6 @@ class ProductControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        productController = new ProductController(productService);
         objectMapper = new ObjectMapper();
         mockMvc =
                 MockMvcBuilders

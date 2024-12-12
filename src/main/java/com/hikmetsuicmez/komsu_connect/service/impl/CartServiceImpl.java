@@ -11,12 +11,14 @@ import com.hikmetsuicmez.komsu_connect.repository.UserRepository;
 import com.hikmetsuicmez.komsu_connect.response.CartItemResponse;
 import com.hikmetsuicmez.komsu_connect.service.CartService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CartServiceImpl implements CartService {
 
     private final CartItemRepository cartItemRepository;
@@ -25,6 +27,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartItemResponse addToCart(Long productId, Long userId, Integer quantity) {
+        log.info("Adding to cart - Product ID: {}, User ID: {}, Quantity: {}", productId, userId, quantity);
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new UserNotFoundException("Product not found"));
 
@@ -37,12 +40,14 @@ public class CartServiceImpl implements CartService {
         cartItem.setQuantity(quantity);
 
         CartItem savedCartItem = cartItemRepository.save(cartItem);
+        log.info("Cart item saved - CartItem ID: {}", savedCartItem.getId());
         return CartItemMapper.toResponseDto(savedCartItem);
     }
 
 
     @Override
     public List<CartItemResponse> viewCart(Long userId) {
+        log.info("Viewing cart - User ID: {}", userId);
         List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
         return cartItems
                 .stream()

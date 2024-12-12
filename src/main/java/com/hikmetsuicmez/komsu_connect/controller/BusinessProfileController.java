@@ -115,6 +115,13 @@ public class BusinessProfileController extends RestBaseController {
         return ApiResponse.success(photoUrl);
     }
 
+    @PostMapping("/products/{productId}/upload-photo")
+    public ApiResponse<?> uploadProductPhoto(
+            @PathVariable Long productId,
+            @RequestParam("file") MultipartFile file) {
+        String photoUrl = businessProfileService.saveProductPhoto(productId, file);
+        return ApiResponse.success(photoUrl);
+    }
 
 }
 

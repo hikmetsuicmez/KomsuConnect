@@ -14,4 +14,7 @@ public class UserSummary {
     private String firstName;
     private String lastName;
     private String role;
+
+    public UserSummary(Long userId, String senderName) {
+    }
 }

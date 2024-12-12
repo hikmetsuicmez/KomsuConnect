@@ -13,6 +13,8 @@ public class CartItemMapper {
                 .productId(cartItem.getProduct().getId())
                 .productName(cartItem.getProduct().getName())
                 .quantity(cartItem.getQuantity())
+                .price(cartItem.getProduct().getPrice())
+                .photoUrl(cartItem.getProduct().getPhotoUrl())
                 .build();
     }
 
