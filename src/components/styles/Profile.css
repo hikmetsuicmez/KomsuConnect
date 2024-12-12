@@ -1,0 +1,101 @@
+/* Profile.css */
+
+/* Kart Tasarımı */
+.card {
+    background-color: #f9f9f9; /* Açık renk arka plan */
+    color: #333; /* Koyu metin rengi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Kart Başlık */
+.card-header {
+    background: linear-gradient(90deg, #007bff, #6d98d6); /* Gradient arka plan */
+    color: white; /* Beyaz metin */
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+    border-radius: 15px 15px 0 0;
+}
+
+/* Profil Resmi */
+img.rounded-circle {
+    border: 3px solid rgba(0, 0, 0, 0.1); /* Çerçeve rengi */
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+    margin: 15px auto;
+    display: block;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    border-radius: 50%;
+}
+
+/* Hizmet Profili */
+.hizmet-profil {
+    background-color: #218838; /* Kartın mavi tonu ile uyumlu */
+    color: white; /* Beyaz metin rengi */
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 1rem;
+    text-align: left;
+}
+
+/* Butonlar */
+.btn {
+    background-color: #007bff; /* Birincil buton rengi */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+.btn:hover {
+    background-color: #0056b3; /* Hover efekti için koyu mavi */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* İptal Butonu */
+.btn-cancel {
+    background-color: #6c757d; /* Gri renk */
+    color: white;
+}
+.btn-cancel:hover {
+    background-color: #5a6268; /* Hover efekti */
+}
+
+/* Başlık */
+h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+    .card {
+        padding: 15px;
+    }
+
+    img.rounded-circle {
+        width: 80px;
+        height: 80px;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+}
