@@ -1,0 +1,172 @@
+/* Genel Container */
+.messages-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    padding: 20px;
+    background-color: #303031; /* Navbar rengine daha yakın */
+    color: white;
+    gap: 20px;
+}
+
+/* Sol Panel (Inbox Listesi) */
+.conversation-list {
+    width: 20%;
+    max-width: 250px;
+    height: 80%;
+    background-color: #303031; /* Daha koyu bir panel rengi */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.conversation-list h4 {
+    padding: 15px;
+    background-color: #303031; /* Navbar ile uyumlu */
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 1px solid #4caf50;
+}
+
+.conversation-list ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.conversation-list li {
+    padding: 10px;
+    background-color: #303031; /* Liste elemanları için uyumlu bir renk */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 5px;
+}
+
+.conversation-list li:hover {
+    background-color: #4caf50;
+    transform: scale(1.03);
+}
+
+.conversation-list li.active {
+    background-color: #4caf50;
+    font-weight: bold;
+    border-left: 5px solid #303031;
+}
+
+/* Sağ Panel (Mesajlaşma Penceresi) */
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    max-width: 600px;
+    height: 80%;
+    background-color: #303031; /* Panel rengi */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.messages-header {
+    padding: 10px;
+    background-color: #303031; /* Header için uyumlu renk */
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 1px solid #4caf50;
+}
+
+.messages-body {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #4caf50 #1b1b36;
+}
+
+.messages-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.messages-body::-webkit-scrollbar-thumb {
+    background-color: #4caf50;
+    border-radius: 10px;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    word-wrap: break-word;
+    font-size: 1rem;
+    color: white;
+    transition: transform 0.2s ease;
+}
+
+.message-bubble:hover {
+    transform: scale(1.05);
+}
+
+.message-bubble.me {
+    align-self: flex-end;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 15px 15px 0 15px;
+}
+
+.message-bubble.other {
+    align-self: flex-start;
+    background-color: #29294d;
+    color: white;
+    border-radius: 15px 15px 15px 0;
+}
+
+/* Footer (Mesaj Gönderme Alanı) */
+.messages-footer {
+    display: flex;
+    padding: 10px;
+    background-color: #23234b; /* Footer uyumlu renk */
+    gap: 10px;
+}
+
+.messages-footer input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    color: #333;
+    background-color: #ffffff;
+}
+
+.messages-footer input::placeholder {
+    color: #999;
+}
+
+.messages-footer button {
+    padding: 10px 15px;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.messages-footer button:hover {
+    background-color: #45a045;
+    transform: scale(1.05);
+}
