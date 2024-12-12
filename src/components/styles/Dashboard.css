@@ -50,13 +50,18 @@
 }
 
 .business-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px; /* Tüm kartların aynı yüksekliğe sahip olması */
     border: 1px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     background-color: #fff;
-    margin: 0; /* Kartlar arasında boşluk kalmasın */
+    margin: 0;
+    outline: none;
 }
 
 .business-card:hover {
@@ -65,26 +70,37 @@
 
 .business-image img {
     width: 100%;
-    height: 200px;
+    height: 150px; 
     object-fit: cover;
-    margin: 0; /* Alt boşlukları kaldır */
-    padding: 0; /* Alt boşlukları kaldır */
+    margin: 0; 
+    padding: 0;
 }
 
 .business-info {
     padding: 15px;
+    flex-grow: 1; 
+    margin: 0; /* Kenar boşluklarını sıfırlar */
+    padding: 10px; /* İstenilen iç boşluğu ekler */
 }
 
 .business-info h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
     color: #333;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .business-description {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #666;
     margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Maksimum iki satır göster */
+    -webkit-box-orient: vertical;
 }
 
 .business-rating {
@@ -98,9 +114,15 @@
     padding: 10px 15px;
     background-color: #165234;
     color: #fff;
+    outline: none;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+}
+
+.details-button:focus {
+    outline: none; /* Ek odak durumlarını sıfırlar */
+    box-shadow: none; /* Gölgeleri kaldırır */
 }
 
 .details-button:hover {
