@@ -2,6 +2,7 @@ package com.hikmetsuicmez.komsu_connect.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.List;
 
 @Entity
@@ -13,23 +14,23 @@ import java.util.List;
 @Builder
 public class BusinessProfile {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String businessName;
-    private String businessDescription;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        private String businessName;
+        private String businessDescription;
 
-    @Column(name = "photo_url")
-    private String photoUrl;
+        @Column(name = "photo_url")
+        private String photoUrl;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+        @OneToOne
+        @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+        private User user;
 
-    @OneToMany(mappedBy = "businessProfile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Product> products;
+        @OneToMany(mappedBy = "businessProfile", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+        private List<Product> products;
 
-    public String getNeighborhood() {
-        return user.getNeighborhood();
-    }
+        public String getNeighborhood() {
+                return user.getNeighborhood();
+        }
 }

@@ -8,21 +8,22 @@ import com.hikmetsuicmez.komsu_connect.response.CartItemResponse;
 
 public class CartItemMapper {
 
-    public static CartItemResponse toResponseDto(CartItem cartItem) {
-        return CartItemResponse.builder()
-                .productId(cartItem.getProduct().getId())
-                .productName(cartItem.getProduct().getName())
-                .quantity(cartItem.getQuantity())
-                .price(cartItem.getProduct().getPrice())
-                .photoUrl(cartItem.getProduct().getPhotoUrl())
-                .build();
-    }
+        public static CartItemResponse toResponseDto(CartItem cartItem) {
+                return CartItemResponse.builder()
+                            .productId(cartItem.getProduct().getId())
+                            .productName(cartItem.getProduct().getName())
+                            .quantity(cartItem.getQuantity())
+                            .price(cartItem.getProduct().getPrice())
+                            .photoUrl(cartItem.getProduct().getPhotoUrl())
+                            .businessName(cartItem.getProduct().getBusinessProfile() != null ? cartItem.getProduct().getBusinessProfile().getBusinessName() : "Bilinmeyen İşletme")
+                            .build();
+        }
 
-    public static CartItem toEntity(CartItemRequest cartItemRequest, User user, Product product) {
-        return CartItem.builder()
-                .product(product)
-                .quantity(cartItemRequest.getQuantity())
-                .user(user)
-                .build();
-    }
+        public static CartItem toEntity(CartItemRequest cartItemRequest, User user, Product product) {
+                return CartItem.builder()
+                            .product(product)
+                            .quantity(cartItemRequest.getQuantity())
+                            .user(user)
+                            .build();
+        }
 }

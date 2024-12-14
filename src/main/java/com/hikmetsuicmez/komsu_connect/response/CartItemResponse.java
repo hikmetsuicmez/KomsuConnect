@@ -14,5 +14,6 @@ public class CartItemResponse {
     private Integer quantity;
     private Double price; // Ürünün fiyatı
     private String photoUrl; // Ürün fotoğraf URL'si
-
+    private String businessName; // İşletme adı
+    
 }
