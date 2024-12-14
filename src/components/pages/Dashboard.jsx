@@ -54,7 +54,9 @@ function Dashboard() {
 
     return (
         <div className="dashboard-container">
-            <h2 className="dashboard-title">Mahalledeki İşletmeler</h2>
+            <h2 className="dashboard-title">Mahallendeki İşletmeleri Filtrele</h2>
+            <h3 className="dashboard-title2">Aradığın işletmeyi kolaylıkla bul!</h3>
+
             <div className="search-container">
                 <input
                     type="text"

@@ -7,7 +7,7 @@ import "../styles/BusinessDetail.css";
 function BusinessDetail() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { id } = location.state || {}; // İşletme ID'sini alıyoruz
+    const { id } = location.state || {}; // İşletme ID'si
     const { token, user } = useAuth();
     const [business, setBusiness] = useState(null); // İşletme bilgileri
     const [products, setProducts] = useState([]);
@@ -15,6 +15,7 @@ function BusinessDetail() {
     const [error, setError] = useState(null);
     const [rating, setRating] = useState(0); // Kullanıcının puanı
     const [averageRating, setAverageRating] = useState(null); // Ortalama puan
+    const [productQuantities, setProductQuantities] = useState({}); // Ürün miktarları
 
     useEffect(() => {
         if (!id) {
@@ -88,10 +89,11 @@ function BusinessDetail() {
 
     const handleAddToCart = async (productId) => {
         try {
+            const quantity = productQuantities[productId] || 1;
             const cartItem = {
                 productId, // Ürün ID'si
                 userId: user.id, // Kullanıcı ID'si
-                quantity: 1, // Varsayılan miktar
+                quantity, // Kullanıcıdan gelen miktar
             };
 
             await api.post("/cart/add", cartItem, {
@@ -169,6 +171,21 @@ function BusinessDetail() {
                             <h4>{product.name}</h4>
                             <p>{product.description}</p>
                             <p>{product.price} ₺</p>
+                            <div>
+                                <label htmlFor={`quantity-${product.id}`}>Miktar:</label>
+                                <input
+                                    type="number"
+                                    id={`quantity-${product.id}`}
+                                    min="1"
+                                    defaultValue="1"
+                                    onChange={(e) =>
+                                        setProductQuantities((prevState) => ({
+                                            ...prevState,
+                                            [product.id]: Number(e.target.value),
+                                        }))
+                                    }
+                                />
+                            </div>
                             <button
                                 onClick={() => handleAddToCart(product.id)}
                                 className="btn btn-secondary"

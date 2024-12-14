@@ -32,6 +32,7 @@ function CartPage() {
                 }, []);
 
                 setCartItems(mergedItems);
+                
             } catch (err) {
                 console.error("Error fetching cart items:", err);
                 setError("Sepet öğeleri alınamadı.");
@@ -86,6 +87,7 @@ function CartPage() {
                                         className="cart-item-image"
                                     />
                                     <div className="cart-item-details">
+                                        <h4>İşletme - {item.businessName}</h4>
                                         <h4>{item.productName}</h4>
                                         <p>Miktar: {item.quantity}</p>
                                         <p>Toplam Fiyat: {item.quantity * item.price} ₺</p>
