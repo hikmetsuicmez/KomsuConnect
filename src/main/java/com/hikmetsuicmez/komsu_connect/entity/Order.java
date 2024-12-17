@@ -1,10 +1,8 @@
 package com.hikmetsuicmez.komsu_connect.entity;
 
+import com.hikmetsuicmez.komsu_connect.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,18 +14,28 @@ import java.util.List;
 @Table(name = "orders")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
 
-    @ManyToOne
-    private User user;
+        @ManyToOne
+        private User user;
 
-    private Double totalPrice;
-    private LocalDateTime createdAt;
+        private Double totalPrice;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems = new ArrayList<>();
+        @Enumerated(EnumType.STRING)
+        @Column(nullable = false)
+        private OrderStatus status;
+
+        private LocalDateTime createdAt;
+
+        private String paymentId;
+        private String paymentStatus;
+        private LocalDateTime paymentDate;
+
+        @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<OrderItem> orderItems = new ArrayList<>();
 }
