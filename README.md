@@ -7,14 +7,16 @@ KomşuConnect, mahallenizdeki işletmelere kolay erişim sağlamak ve onlardan a
 - [Özellikler](#özellikler)
 - [Ekran Görüntüleri](#ekran-görüntüleri)
 - [Kullanılan Teknolojiler](#kullanılan-teknolojiler)
-- [Kurulum](#kurulum)
+- [Proje Yapısı](#projeyapısı)
 - [API Kullanımı](#api-kullanımı)
+- [Kurulum](#kurulum)
 
-## ✨ Özellikler
+## ✨ Özellikler 
 
 - **Güvenli Giriş:** Güvenli bir şekilde kayıt olun ve giriş yapın.
 - 🔍 **Mahalle Filtreleme:** Mahallenizdeki işletmeleri kolayca filtreleyin.
 - 🛒 **Sepet Yönetimi:** Ürünleri sepete ekleyin, miktarları belirleyin ve sipariş verin.
+-  💳 **İyzico Ödeme Entegrasyonu:** Güvenli ve hızlı ödeme işlemleri.
 - 💬 **Mesajlaşma:** İşletme sahipleriyle iletişim kurun.
 - ⭐ **Değerlendirme:** İşletmelere puan verin ve yorum yapın.
 - 📜 **Sipariş Geçmişi:** Daha önce verdiğiniz siparişleri görüntüleyin.
@@ -25,36 +27,54 @@ KomşuConnect, mahallenizdeki işletmelere kolay erişim sağlamak ve onlardan a
 ## 📸 Ekran Görüntüleri
 
 ### Giriş Sayfası
-![image](https://github.com/user-attachments/assets/8c4b6d44-666d-487a-8db0-854bc0873402)
+![image](https://github.com/user-attachments/assets/e460e6ba-a287-4211-bebd-52e986241123)
 
 ### Kayıt Sayfası
-![image](https://github.com/user-attachments/assets/76f151d0-f9e6-47fc-ad97-a1d523160c8a)
-![image](https://github.com/user-attachments/assets/455a95f5-5f78-4656-8d3c-6104c68fd1ad)
+#### Giriş Yap
+![image](https://github.com/user-attachments/assets/38be7cd2-343a-4022-af87-f9f6e6ddc539)
 
+#### Kayıt Ol
+##### Kullanıcı
+![image](https://github.com/user-attachments/assets/6f54b7b8-6d5a-497d-b9fa-31895e304530)
+##### İşletme
+![image](https://github.com/user-attachments/assets/3514bbf1-f32d-4197-a8d5-c2017e7ef5ae)
 
 ### Anasayfa
-![image](https://github.com/user-attachments/assets/d7d3f93c-7c5d-403b-9941-7141591d737a)
-
+![image](https://github.com/user-attachments/assets/c905ebbb-99ad-4875-9540-c229cec78cbd)
 
 ### Mahalle Filtreleme
-![image](https://github.com/user-attachments/assets/14e4131e-8f96-44f5-8634-57516ef9d900)
-
+![image](https://github.com/user-attachments/assets/92acb415-9eee-4210-8d47-3712094ee870)
 ### Sepet Yönetimi
 ![image](https://github.com/user-attachments/assets/f87c58d2-7feb-474a-85cc-518f1c5513d8)
-
-
+#### Adres Ekleme
+![image](https://github.com/user-attachments/assets/4500eb1d-4efc-4098-b3b0-78753a8eb69d)
+#### Ödeme İşlemi
+![image](https://github.com/user-attachments/assets/dc6eecb3-1ca0-4535-b50c-0d1a285ee511)
 ### İşletme Detayı
 ![image](https://github.com/user-attachments/assets/d87a40d3-378f-4a53-a4dd-c1044b7ef9d8)
 
 
+---
+
 ## 🛠 Kullanılan Teknolojiler
 
-- **Frontend:** React, CSS
-- **Backend:** Spring Boot, Hibernate
-- **Veritabanı:** MySQL
-- **Authentication:** JWT (JSON Web Tokens)
-- **Diğer:** Maven, Lombok, SwaggerUI
+### **Backend**
+- **Java Spring Boot**
+- **Hibernate (JPA)**
+- **MySQL**
+- **JWT Authentication**
 
+### **Frontend**
+- **React.js**
+- **Axios**
+- **CSS**
+
+### **Ödeme Entegrasyonu**
+- **İyzico API**
+  - Ödeme işlemleri ve doğrulama
+  - Kullanıcı dostu güvenli ödeme sistemi
+
+---
 - ## Proje Yapısı
 
 ### Backend Proje Yapısı
@@ -128,6 +148,56 @@ src
 ├── package-lock.json        # Sabit bağımlılık sürümleri
 └── README.md                # Proje dokümantasyonu
 ```
+
+### API Endpointler
+
+| **Controller**              | **HTTP Method** | **Endpoint**                                   | **Açıklama**                                                               |
+|-----------------------------|-----------------|----------------------------------------------|------------------------------------------------------------------------------|
+| **user-controller**         | POST            | `/api/users/update-mail`                                        | Kullanıcının e-posta adresini günceller.                                     |
+|                             | GET             | `/api/users/me`                                                 | Mevcut kullanıcı bilgilerini döner.                                          |
+|                             | PUT             | `/api/users/me`                                                 | Oturum açmış kullanıcının bilgilerini günceller.                             |
+|                             | GET             | `/api/users`                                                    | Sistemdeki tüm kullanıcıların bilgilerini getirir.                           |
+|                             | GET             | `/api/users/{userId}`                                           | Belirtilen `userId`'ye sahip kullanıcının bilgilerini getirir.               |
+| **notification-controller** | GET             | `/api/notifications`                                            | Kullanıcının bildirimlerini getirir.                                         |
+|                             | PUT             | `/api/notifications/{notificationId}/mark-as-read`              | Belirtilen `notificationId`'ye ait bildirimi okundu olarak işaretler. |
+|                             | GET             | `/api/notifications/unread-count`                               | Kullanıcının okunmamış bildirimlerinin sayısını döner.                       |
+| **message-controller**      | PUT             | `/api/messages/read/{messageId}`                       | Belirtilen `messageId`'ye ait mesajı okundu olarak işaretler.                |
+|                             | POST            | `/api/messages/send/{receiverId}`                      | Belirtilen `receiverId`'ye mesaj gönderir.                                   |
+|                             | GET             | `/api/messages/inbox`                                  | Kullanıcının gelen kutusundaki mesajları listeler.                           |
+|                             | GET             | `/api/messages/history/{userId}`                       | Belirtilen `userId` ile olan mesaj geçmişini getirir.                        |
+|                             | GET             | `/api/messages/conversation/{userId}/{selectedUserId}` | Belirtilen `userId` ve `selectedUserId` arasındaki konuşmayı getirir.        |
+|                             | GET             | `/api/messages/conversation-or-create/{userId}/{selectedUserId}` | Eğer konuşma mevcutsa getirir, yoksa yeni bir konuşma başlatır.    |
+| **business-profile-controller** | PUT             | `/api/business/products/{productId}`              | Belirtilen `productId`'ye ait ürün bilgisini günceller.                     |
+|                             | DELETE          | `/api/business/products/{productId}`              | Belirtilen `productId`'ye ait ürünü siler.                                  |
+|                             | POST            | `/api/business/{businessId}/upload-photo`         | Belirtilen `businessId`'ye ait işletme için fotoğraf yükler.                |
+|                             | POST            | `/api/business/rate`                              | Bir işletmeye puanlama ve yorum yapma işlemi gerçekleştirir.                |
+|                             | POST            | `/api/business/products/{productId}/upload-photo` | Belirtilen `productId`'ye ait ürün için fotoğraf yükler.                    |
+|                             | POST            | `/api/business/add-product`                       | Yeni bir ürün ekler.                                                        |
+|                             | GET             | `/api/business/{businessId}`                      | Belirtilen `businessId`'ye ait işletme detaylarını döner.                   |
+|                             | GET             | `/api/business/{businessId}/products`             | Belirtilen `businessId`'ye ait ürün listesini döner.                        |
+|                             | GET             | `/api/business/{businessId}/owner`                | Belirtilen `businessId`'ye ait işletme sahibinin bilgilerini döner.         |
+|                             | GET             | `/api/business/{businessId}/average-rating`       | Belirtilen `businessId`'ye ait işletmenin ortalama puanını döner.           |
+|                             | GET             | `/api/business/search`                            | İşletmeler arasında arama yapar.                                            |
+|                             | GET             | `/api/business/public-businesses`                 | Genel olarak erişilebilir tüm işletme bilgilerini döner.                    |
+|                             | GET             | `/api/business/products`                          | Tüm işletmelere ait ürün listesini döner.                                   |
+|                             | PUT             | `/api/payments/{paymentId}/status`                | Ödeme durumunu günceller.                                                    |
+|                             | GET             | `/api/payments/{paymentId}`                       | Belirtilen ödemenin detayını getirir.                                        |
+| **order-controller**        | POST            | `/order`                                          | Yeni bir sipariş oluşturur. Sepetteki ürünleri siparişe çevirir.          |
+|                             | POST            | `/order/{orderId}/payment`                        | Belirtilen `orderId` için ödeme işlemini başlatır.                        |
+|                             | GET             | `/order/history`                                  | Kullanıcının geçmiş siparişlerini listeler.                               |
+| **cart-controller**         | POST            | `/cart/add`                                       | Sepete yeni bir ürün ekler. Ürün ID ve miktar parametreleri alır.         |
+|                             | GET             | `/cart`                                           | Kullanıcının mevcut sepetindeki ürünleri listeler.                        |
+| **auth-controller**         | POST            | `/auth/register/user`                             | Yeni bir kullanıcı kaydı oluşturur. Kullanıcı bilgileri gereklidir.       |
+|                             | POST            | `/auth/register/business`                         | Yeni bir işletme hesabı kaydı oluşturur. İşletme bilgileri gereklidir.    |
+|                             | POST            | `/auth/login`                                     | Kullanıcı veya işletme hesabı için giriş yapar. Kullanıcı adı ve şifre alır. |
+| **product-controller**      | POST            | `/api/products/{productId}/rate`                  | Belirtilen `productId` için kullanıcı tarafından bir puanlama yapılmasını sağlar. |
+|                             | GET             | `/api/products/latest-product`                    | Sistemdeki en son eklenen ürünü getirir.                                     |
+| **favorite-controller**     | POST            | `/api/favorites/product/{productId}`              | Belirtilen `productId` ürününü favorilere ekler.                             |
+|                             | DELETE          | `/api/favorites/product/{productId}`              | Belirtilen `productId` ürününü favorilerden kaldırır.                        |
+|                             | POST            | `/api/favorites/business/{businessId}`            | Belirtilen `businessId` işletmesini favorilere ekler.                        |
+|                             | DELETE          | `/api/favorites/business/{businessId}`            | Belirtilen `businessId` işletmesini favorilerden kaldırır.                   |
+|                             | GET             | `/api/favorites`                                  | Kullanıcının favori ürünlerini ve işletmelerini listeler.                    |
+
 
 # KomşuConnect - Kurulum ve Çalıştırma Kılavuzu
 
