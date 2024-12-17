@@ -1,0 +1,91 @@
+/* Genel tema geçiş efektleri */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Mode */
+.light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* Dark Mode */
+.dark {
+  background-color: #212529;
+  color: #f8f9fa;
+}
+
+/* Navbar teması */
+.navbar-dark {
+  background-color: #343a40 !important;
+}
+
+.navbar-light {
+  background-color: #ffffff !important;
+}
+
+
+/* Tema değişim butonu */
+.btn-outline-secondary {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-outline-secondary:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline-secondary i {
+  font-size: 20px;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.dark .btn-outline-secondary i {
+  color: #ffdd57; /* Güneş ikonu için sarı renk */
+}
+
+.light .btn-outline-secondary i {
+  color: #343a40; /* Ay ikonu için koyu renk */
+}
+
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+.button-primary {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+}
+.button-primary:hover {
+  background-color: #0056b3;
+}
+.button-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+}
+.button-secondary:hover {
+  background-color: #5a6268;
+}
+.button-danger {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+}
+.button-danger:hover {
+  background-color: #c82333;
+}

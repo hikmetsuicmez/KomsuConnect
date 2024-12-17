@@ -1,0 +1,124 @@
+.payment-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+  
+  .payment-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .payment-header h2 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .payment-amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4a5568;
+  }
+  
+  .payment-amount .amount {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+  }
+  
+  .expiry-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  
+  .expiry-inputs select {
+    width: 100%;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 0.875rem;
+    background-color: #48bb78;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .submit-button:hover {
+    background-color: #38a169;
+  }
+  
+  .submit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.4);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    .payment-container {
+      padding: 1rem;
+      margin: 1rem;
+    }
+  
+    .payment-form {
+      padding: 1.5rem;
+    }
+  
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  

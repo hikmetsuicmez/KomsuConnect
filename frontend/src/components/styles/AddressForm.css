@@ -1,0 +1,118 @@
+/* Existing cart styles ... */
+
+/* Address Form Styles */
+.address-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .address-form h3 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .address-form div {
+    margin-bottom: 1.25rem;
+  }
+  
+  .address-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4b5563;
+    font-weight: 500;
+  }
+  
+  .address-form input,
+  .address-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  
+  .address-form textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .address-form input:focus,
+  .address-form textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  
+  .address-form button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .address-form button:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .address-form button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
+  }
+  
+  /* Order Steps Indicator */
+  .order-steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+  }
+  
+  .step {
+    display: flex;
+    align-items: center;
+    color: #6b7280;
+  }
+  
+  .step.active {
+    color: #2563eb;
+    font-weight: 500;
+  }
+  
+  .step:not(:last-child)::after {
+    content: "→";
+    margin: 0 1rem;
+    color: #9ca3af;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    .address-form {
+      padding: 1.5rem;
+      margin: 1rem;
+    }
+    
+    .address-form h3 {
+      font-size: 1.25rem;
+    }
+    
+    .address-form input,
+    .address-form textarea,
+    .address-form button {
+      padding: 0.625rem;
+    }
+  }
+  
+  

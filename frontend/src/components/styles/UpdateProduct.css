@@ -1,0 +1,97 @@
+/* UpdateProduct.css */
+
+/* Ana Konteyner */
+.update-product-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    background-color: #393E46;
+    color: #EEEEEE;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Başlık */
+.update-product-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #00ADB5;
+    margin-bottom: 20px;
+}
+
+/* Form Alanı */
+.update-product-form .form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-size: 1rem;
+    color: #EEEEEE;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #6C757D;
+    border-radius: 5px;
+    background-color: #EEEEEE;
+    color: #393E46;
+}
+
+.form-control:focus {
+    border-color: #00ADB5;
+    box-shadow: 0 0 5px rgba(0, 173, 181, 0.5);
+}
+
+/* Hata Mesajları */
+.is-invalid {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9rem;
+}
+
+/* Butonlar */
+.update-product-buttons {
+    text-align: center;
+}
+
+.update-product-buttons .btn {
+    width: 120px;
+    margin: 0 10px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #00ADB5;
+    color: #EEEEEE;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #007b7f;
+}
+
+.btn-secondary {
+    background-color: #6C757D;
+    color: #EEEEEE;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #565e64;
+}

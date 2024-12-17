@@ -1,0 +1,101 @@
+.cart-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1e1e2f;
+    font-family: 'Poppins', sans-serif;
+}
+
+.cart-container {
+    max-width: 800px; /* Genişliği artırdık */
+    width: 100%;
+    background-color: #ffffff;
+    padding: 30px; /* İç boşluğu artırdık */
+    border-radius: 12px; /* Köşe yuvarlaklığı biraz artırıldı */
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); /* Gölge yoğunluğunu artırdık */
+    text-align: center;
+}
+
+.cart-title {
+    margin-bottom: 30px; /* Başlık altındaki boşluk büyütüldü */
+    font-size: 28px; /* Font büyütüldü */
+    color: #333;
+}
+
+.empty-cart {
+    font-size: 18px;
+    color: #888;
+    margin: 20px 0;
+}
+
+.cart-items {
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Kartlar arasındaki boşluk artırıldı */
+    padding: 15px; /* İç boşluğu artırdık */
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.cart-item-image {
+    width: 100px; /* Görsel genişliği artırıldı */
+    height: 100px; /* Görsel yüksekliği artırıldı */
+    border-radius: 10px; /* Görsel köşe yuvarlaklığı büyütüldü */
+    margin-right: 20px; /* Görsel ile metin arasındaki boşluk artırıldı */
+}
+
+.cart-item-details h4 {
+    margin: 0 0 8px 0; /* Başlık altındaki boşluk büyütüldü */
+    font-size: 18px; /* Font büyütüldü */
+    color: #444;
+}
+
+.cart-item-details p {
+    margin: 0;
+    font-size: 16px; /* Font büyütüldü */
+    color: #666;
+}
+
+.cart-total {
+    margin-top: 30px; /* Genel toplam alanının üst boşluğu artırıldı */
+    font-size: 22px; /* Font büyütüldü */
+    font-weight: bold;
+    color: #333;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 25px; /* Butonların boyutu büyütüldü */
+    font-size: 16px; /* Font büyütüldü */
+    border-radius: 8px; /* Köşe yuvarlaklığı artırıldı */
+}
+
+.btn-primary {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.btn-primary:hover {
+    background-color: #3e8e41; /* Hover rengi daha belirgin hale getirildi */
+}
+
+.btn-secondary:hover {
+    background-color: #525c64; /* Hover rengi daha belirgin hale getirildi */
+}

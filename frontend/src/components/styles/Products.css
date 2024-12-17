@@ -1,0 +1,179 @@
+/* Genel Ayarlar */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1E1E2F;
+    color: #333;
+}
+
+/* Başlık Stili */
+.product-header {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 20px 0;
+    background: linear-gradient(90deg, #5ab063, #0b5224);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Ana Konteyner */
+.product-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Ürün Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Ürün Kartı */
+.product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+.product-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Kart İçerikleri */
+.product-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Görseller */
+.product-card-image {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.product-card-image:hover {
+    transform: scale(1.1);
+}
+.product-card-placeholder {
+    width: 100%;
+    height: 200px;
+    background-color: #f0f0f0;
+    border: 1px dashed #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #666;
+    border-radius: 5px;
+}
+
+/* Başlık */
+.product-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+/* Açıklama */
+.product-card-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Fiyat */
+.product-card-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+
+/* Butonlar */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button-primary {
+    background-color: #007BFF;
+    color: #fff;
+    border: 2px solid #007BFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.button-primary:hover {
+    background-color: #295c2c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.button-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+.button-secondary:hover {
+    background-color: #5a6268;
+}
+
+.button-danger {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button-danger::before {
+    content: "🗑️ ";
+    margin-right: 5px;
+}
+.button-secondary::before {
+    content: "✏️ ";
+    margin-right: 5px;
+}
+.button-danger:hover {
+    background-color: #c82333;
+}
+
+/* Mobil Görünüm */
+@media (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+    .product-card {
+        margin: 0 auto;
+    }
+}
+
+/* Ürün Yok Mesajı */
+.no-products-message {
+    text-align: center;
+    color: #666;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}

@@ -1,0 +1,83 @@
+/* Navbar genel stil */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #343a40;
+    padding: 15px 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin: 0 10px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
+}
+
+.navbar ul li a svg {
+    margin-right: 5px;
+    font-size: 1.2rem;
+}
+
+.navbar ul li a:hover {
+    color: #208d53 !important;
+    transform: scale(1.1);
+}
+
+/* Okunmamış bildirimler için stil */
+.unread-notifications {
+    font-weight: bold; /* Kalın yazı */
+    color: #dc3545; /* Kırmızı renk */
+    background-color: rgba(255, 0, 0, 0.1); /* Hafif kırmızı arka plan */
+    border-radius: 5px; /* Hafif köşe yuvarlama */
+    padding: 5px; /* İç boşluk */
+}
+
+/* Bildirim ikonunun sağ üstüne rozet */
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+/* Mobil uyumluluk */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar ul li {
+        margin: 10px 0;
+    }
+}
+
+/* Aktif link için özel stil */
+.navbar ul li a.active {
+    color: #208d53 !important;
+    border-bottom: 2px solid #208d53;
+    padding-bottom: 2px;
+}

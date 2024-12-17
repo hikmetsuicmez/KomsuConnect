@@ -1,0 +1,98 @@
+/* Genel Konteyner */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background:
+    linear-gradient(to right, rgba(18, 32, 20, 0.8), rgba(2, 14, 3, 0.8)), /* Renk geçişi */ 
+    url("./overhead-shot-buildings-streets-neighborhood.jpg");
+    background-size: 1700px;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Kart Tasarımı */
+.login-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    width: 380px;
+    text-align: center;
+}
+
+/* Başlık */
+.login-title {
+    font-size: 28px;
+    color: #4caf50;
+    margin-bottom: 25px;
+    font-weight: bold;
+}
+
+/* Form Grupları */
+.login-form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Etiketler */
+.login-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4caf50;
+    font-weight: bold;
+}
+
+/* Giriş Inputları */
+.login-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-input:focus {
+    border-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+}
+
+/* Giriş Butonu */
+.login-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-button:hover {
+    background-color: #388e3c;
+}
+
+/* Kayıt Ol Bölümü */
+.login-register {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.login-register-link {
+    color: #212529;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-register-link:hover {
+    text-decoration: underline;
+}
