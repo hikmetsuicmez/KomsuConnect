@@ -126,23 +126,6 @@ function Navbar() {
                                 </li>
                             </>
                         )}
-                        <li className="nav-item ms-3">
-                            <button
-                                className="btn btn-outline-secondary"
-                                onClick={toggleTheme}
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    padding: "10px",
-                                    borderRadius: "50%",
-                                    width: "40px",
-                                    height: "40px",
-                                }}
-                            >
-                                <i className={`fas ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
-                            </button>
-                        </li>
                     </ul>
                 </div>
             </div>

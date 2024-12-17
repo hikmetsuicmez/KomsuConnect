@@ -34,7 +34,7 @@ function Home() {
             {/* Hero Bölümü */}
             <header className="home-hero">
                 <h3 className="home-hero-title">Komşularınızla Bağ Kurun</h3>
-                <h1 className='home-hero-text'>(İletişime geçin)</h1>
+                <h1 className='home-hero-text'>(Yerel işletmelerle bağlantı kurun)</h1>
                 <h1></h1>
                 <p className="home-hero-description">KomşuConnect ile mahallenizdeki işletmeleri keşfedin ve topluluğunuzla bağlarınızı güçlendirin.</p>
                 <div className="home-hero-buttons">

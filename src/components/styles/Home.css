@@ -36,6 +36,10 @@ body {
 
 /* Hero Bölümü */
 .home-hero {
+    background:
+    linear-gradient(to right, rgba(99, 92, 45, 0.8), rgba(39, 31, 14, 0.8)), /* Renk geçişi */ 
+    url("./overhead-shot-buildings-streets-neighborhood.jpg");
+    background-size: 1700px;
     display: flex;
     flex-direction: column;
     justify-content: center;

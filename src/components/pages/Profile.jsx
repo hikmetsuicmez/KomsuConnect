@@ -24,6 +24,9 @@ function Profile() {
     const [errorMessage, setErrorMessage] = useState('');
     const [selectedFile, setSelectedFile] = useState(null); // Fotoğraf dosyası için state
 
+
+   
+
     // Profil bilgisini getirme
     const fetchProfile = useCallback(async () => {
         const endpoint = userId ? `/api/users/${userId}` : `/api/users/me`;
@@ -174,7 +177,7 @@ function Profile() {
                                 </div>
                             </div>
 
-                            {isBusinessOwner && (
+                            {profile.businessId && profile.businessName &&(
                                 <div className="hizmet-profil text-center">
                                     <div className="text-center position-relative">
                                         <img
@@ -243,7 +246,7 @@ function Profile() {
                                     onChange={(e) => setProfile({ ...profile, neighborhood: e.target.value })} />
                             </div>
 
-                            {isBusinessOwner && (
+                            {profile.businessId && profile.businessName && (
 
                                 <div className="mb-3 text-center">
                                     <div className="text-center position-relative">

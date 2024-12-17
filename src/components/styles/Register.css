@@ -3,7 +3,10 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #c5ceb2, #02460b);
+    background:
+    linear-gradient(to right, rgba(18, 32, 20, 0.8), rgba(2, 14, 3, 0.8)), /* Renk geçişi */ 
+    url("./overhead-shot-buildings-streets-neighborhood.jpg");
+    background-size: 1700px;
     padding: 20px;
 }
 

@@ -13,10 +13,25 @@ function Messages() {
     const [receiverName, setReceiverName] = useState(location.state?.receiverName || null);
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
+    const [businesses, setBusinesses] = useState([]);
     const [conversationList, setConversationList] = useState([]);
     const [activeConversation, setActiveConversation] = useState(receiverId);
     const stompClient = useRef(null);
     const messagesEndRef = useRef(null);
+    const [conversationListWithBusinesses, setConversationListWithBusinesses] = useState([]);
+
+    useEffect(() => {
+        const updatedList = conversationList.map((conv) => {
+            const matchingBusiness = businesses.find(
+                (business) => business.id === conv.sender.id
+            );
+            return {
+                ...conv,
+                businessName: matchingBusiness?.businessName || null, // Eğer eşleşme yoksa null
+            };
+        });
+        setConversationListWithBusinesses(updatedList);
+    }, [conversationList, businesses]);
 
     // Fetch inbox conversations
     useEffect(() => {
@@ -41,6 +56,20 @@ function Messages() {
         };
 
         fetchInbox();
+    }, [token]);
+
+    useEffect(() => {
+        const fetchBusinesses = async () => {
+            try {
+                const response = await api.get("/api/business/public-businesses", {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setBusinesses(response.data.data || []);
+            } catch (error) {
+                console.error("Hata:", error);
+            }
+        };
+        fetchBusinesses();
     }, [token]);
 
     // Fetch or create a conversation
@@ -86,7 +115,6 @@ function Messages() {
                 scrollToBottom();
             }
         };
-
         fetchMessages();
     }, [receiverId, user.id, token]);
 
@@ -187,7 +215,6 @@ function Messages() {
                 scrollToBottom();
             }
         };
-
         fetchMessages();
     };
 
@@ -196,15 +223,16 @@ function Messages() {
             <div className="conversation-list">
                 <h4>Mesajlar</h4>
                 <ul>
-                    {conversationList.map((conv) => (
+                    {conversationListWithBusinesses.map((conv) => (
                         <li
                             key={conv.sender.id}
                             className={activeConversation === conv.sender.id ? "active" : ""}
                             onClick={() => handleConversationClick(conv)}
                         >
-                            {conv.businessName || conv.sender.firstName} {/* İşletme adı öncelikli */}
+                            {conv.businessName} {/* İşletme adı öncelikli */}
                         </li>
                     ))}
+
                 </ul>
             </div>
             <div className="chat-window">

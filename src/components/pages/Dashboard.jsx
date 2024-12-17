@@ -24,7 +24,6 @@ function Dashboard() {
                 setError("İşletmeler alınamadı.");
             }
         };
-
         fetchBusinesses();
     }, [token]);
 
@@ -54,25 +53,35 @@ function Dashboard() {
 
     return (
         <div className="dashboard-container">
-            <h2 className="dashboard-title">Mahallendeki İşletmeleri Filtrele</h2>
-            <h3 className="dashboard-title2">Aradığın işletmeyi kolaylıkla bul!</h3>
-
-            <div className="search-container">
-                <input
-                    type="text"
-                    placeholder="Mahalle adı girin..."
-                    value={queryNeighborhood}
-                    onChange={(e) => setQueryNeighborhood(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="İşletme adı girin..."
-                    value={queryBusinessName}
-                    onChange={(e) => setQueryBusinessName(e.target.value)}
-                />
-                <button onClick={handleSearch} disabled={loading}>
-                    Ara
-                </button>
+            <div className="dashboard-top1">
+                <div className="dashboard-top2">
+                    <h1 className="dashboard-title">
+                        Mahallendeki İşletmeleri Filtrele
+                    </h1>
+                    <h3 className="dashboard-title2">
+                        Yerel işletmelerle bağlantı kurun ve topluluğunuzu destekleyin
+                    </h3>
+                    <div className="search-container">
+                        <input
+                            type="text"
+                            placeholder="Mahalle adı girin..."
+                            value={queryNeighborhood}
+                            onChange={(e) => setQueryNeighborhood(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            placeholder="İşletme adı girin..."
+                            value={queryBusinessName}
+                            onChange={(e) => setQueryBusinessName(e.target.value)}
+                        />
+                        <button onClick={handleSearch} disabled={loading}>
+                            <i className="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <p className="business-title">
+                    İşletmeler
+                </p>
             </div>
 
             {loading && <p>Yükleniyor...</p>}
@@ -112,7 +121,10 @@ function Dashboard() {
                 ) : (
                     <p>Henüz işletme bulunamadı.</p>
                 )}
+
             </div>
+
+
         </div>
     );
 }

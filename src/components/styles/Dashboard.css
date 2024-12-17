@@ -1,53 +1,102 @@
 .dashboard-container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
     padding-top: 3px;
     align-items: center;
     justify-content: center;
+}
 
+.dashboard-top1 {
+    padding-bottom: 100px;
+}
+
+
+
+.dashboard-top2 {
+    width: 100%;
+    height: 450px;
+    background:
+    linear-gradient(to right, rgba(34, 193, 195, 0.8), rgba(253, 187, 45, 0.8)), /* Renk geçişi */ 
+    url("./overhead-shot-buildings-streets-neighborhood.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    display: flex;
+    margin-bottom: 30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .dashboard-title {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #ffffff;
-    margin: 20px 220px; /* Ortaya getirmek için */
-    text-transform: capitalize;
-    font-family: 'Poppins', sans-serif;
-    letter-spacing: 1px;
-    background: linear-gradient(90deg, #20854a, #13502c); /* Yeşil degrade */
+    font-size: 3.5rem;
+    font-weight: bold;
     color: #fff;
-    padding: 10px 20px;
-    margin-bottom: 25px;
-    border-radius: 10px; /* Hafif yuvarlatılmış köşeler */
-    display: inline-block; /* Ortada genişlik */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge efekti */
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.business-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: -70px;
+    margin-left: 27px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard-title2 {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.business-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Maksimum iki satır göster */
+    -webkit-box-orient: vertical;
 }
 
 .search-container {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 20px;
+    max-width: 600px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .search-container input {
-    padding: 10px;
+    padding: 12px;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 200px;
+    border: none;
+    border-radius: 50px;
+    outline: none;
+    flex-grow: 1;
+    color: #333;
+    background-color: #fff;
 }
 
 .search-container button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #185535;
-    color: #fff;
+    background-color: #20854a;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.2rem;
+    padding: 12px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: #185535;
 }
 
 .search-container button:disabled {
@@ -57,11 +106,10 @@
 
 .business-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 0; /* Kenar boşluklarını kaldır */
+    grid-template-columns: repeat(3, 1fr); /* 3 sütunlu grid düzeni */
+    gap: 30px; /* Kartlar arası boşluk */
+    padding: 20px;
 }
-
 .business-card {
     display: flex;
     flex-direction: column;
@@ -77,16 +125,34 @@
     outline: none;
 }
 
-.business-card:hover {
-    transform: scale(1.05);
+.business-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 400px; /* Tüm kartların aynı yüksekliğe sahip olması */
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+
 }
 
-.business-image img {
+.business-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.business-card img {
     width: 100%;
-    height: 150px; 
+    height: 220px; /* Görsel boyutunu artırdım */
     object-fit: cover;
-    margin: 0; 
-    padding: 0;
+}
+
+.business-card .business-info {
+    padding: 20px;
+    text-align: left;
 }
 
 .business-info {
@@ -96,29 +162,33 @@
     padding: 10px; /* İstenilen iç boşluğu ekler */
 }
 
-.business-info h3 {
-    font-size: 1.5rem;
+.business-card .business-info h3 {
+    font-size: 1.4rem;
     margin-bottom: 10px;
     color: #333;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }
 
-.business-description {
-    font-size: 0.9rem;
+.business-card .business-info p {
+    font-size: 1rem;
     color: #666;
-    margin-bottom: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1; /* Maksimum iki satır göster */
-    -webkit-box-orient: vertical;
+    margin: 0;
 }
 
 .business-rating {
     font-size: 1rem;
     color: #1d513d;
+}
+
+.business-card .business-info .details-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #20854a;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
 }
 
 .details-button {

@@ -143,15 +143,20 @@ function BusinessDetail() {
     return (
         <div className="business-detail-container">
             <div className="business-info">
-                <h2>{business?.businessName || "İşletme Adı Yok"}</h2>
-                <p>{business?.businessDescription || "Açıklama yok"}</p>
-                <p>
-                    Ortalama Puan:{" "}
-                    {averageRating !== null ? averageRating.toFixed(1) : "Henüz puanlanmamış"}
-                </p>
-                <button onClick={handleSendMessage} className="btn btn-primary">
-                    Mesaj Gönder
-                </button>
+                <div class="clearfix">
+                    <img class="business-photo" src={business?.photoUrl} alt="Baloncu Resmi" />
+                    <div>
+                        <h2>{business?.businessName || "İşletme Adı Yok"}</h2>
+                        <p>{business?.businessDescription || "Açıklama yok"}</p>
+                        <p>
+                            Ortalama Puan:{" "}
+                            {averageRating !== null ? averageRating.toFixed(1) : "Henüz puanlanmamış"}
+                        </p>
+                        <button onClick={handleSendMessage} className="btn btn-primary">
+                            Mesaj Gönder
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <h2>Ürünler</h2>

@@ -3,12 +3,17 @@ import api from "../../api/Api";
 import { useAuth } from "../../context/AuthContext";
 import "../styles/CartPage.css";
 import { useNavigate } from "react-router-dom";
+import PaymentForm from "../pages/PaymentForm";
+import AddressForm from "../pages/AddressForm";
 
 function CartPage() {
     const { token, user } = useAuth();
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [orderStep, setOrderStep] = useState('cart'); // 'cart', 'address', 'payment'
+    const [orderId, setOrderId] = useState(null);
+    const [addressData, setAddressData] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,12 +57,41 @@ function CartPage() {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            alert("Sipariş başarılı bir şekilde oluşturuldu!");
-            setCartItems([]);
-            navigate("/order-history");
+            setOrderId(response.data.data.orderId);
+            setOrderStep('address');
         } catch (error) {
             console.error("Sipariş sırasında hata oluştu:", error);
             alert("Sipariş sırasında bir hata oluştu. Lütfen tekrar deneyin.");
+        }
+    };
+
+    const handleAddressSubmit = (addressData) => {
+        setAddressData(addressData);
+        setOrderStep('payment');
+    };
+
+    const handlePayment = async (paymentData) => {
+        try {
+            // Adres bilgilerini de ekleyerek ödeme isteği gönder
+            const paymentRequest = {
+                ...paymentData,
+                ...addressData
+            };
+
+            const response = await api.post(`/order/${orderId}/payment`, paymentRequest, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.data.result) {
+                alert("Ödeme başarılı bir şekilde gerçekleşti!");
+                setCartItems([]);
+                navigate("/order-history");
+            } else {
+                throw new Error(response.data.errorMessage || "Ödeme başarısız oldu.");
+            }
+        } catch (error) {
+            console.error("Ödeme sırasında hata oluştu:", error);
+            alert("Ödeme sırasında bir hata oluştu. Lütfen tekrar deneyin.");
         }
     };
 
@@ -78,27 +112,37 @@ function CartPage() {
                     <p className="empty-cart">Sepetinizde ürün bulunmamaktadır.</p>
                 ) : (
                     <>
-                        <div className="cart-items">
-                            {cartItems.map((item) => (
-                                <div key={item.productId} className="cart-item">
-                                    <img
-                                        src={item.photoUrl || "placeholder.jpg"}
-                                        alt={item.productName}
-                                        className="cart-item-image"
-                                    />
-                                    <div className="cart-item-details">
-                                        <h4>İşletme - {item.businessName}</h4>
-                                        <h4>{item.productName}</h4>
-                                        <p>Miktar: {item.quantity}</p>
-                                        <p>Toplam Fiyat: {item.quantity * item.price} ₺</p>
-                                    </div>
+                        {orderStep === 'cart' && (
+                            <>
+                                <div className="cart-items">
+                                    {cartItems.map((item) => (
+                                        <div key={item.productId} className="cart-item">
+                                            <img
+                                                src={item.photoUrl || "placeholder.jpg"}
+                                                alt={item.productName}
+                                                className="cart-item-image"
+                                            />
+                                            <div className="cart-item-details">
+                                                <h4>İşletme - {item.businessName}</h4>
+                                                <h4>{item.productName}</h4>
+                                                <p>Miktar: {item.quantity}</p>
+                                                <p>Toplam Fiyat: {item.quantity * item.price} ₺</p>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                        <h3 className="cart-total">Genel Toplam: {totalAmount} ₺</h3>
-                        <button onClick={handlePlaceOrder} className="btn btn-primary">
-                            Sipariş Ver
-                        </button>
+                                <h3 className="cart-total">Genel Toplam: {totalAmount} ₺</h3>
+                                <button onClick={handlePlaceOrder} className="btn btn-primary">
+                                    Sipariş Ver
+                                </button>
+                            </>
+                        )}
+                        {orderStep === 'address' && (
+                            <AddressForm onSubmit={handleAddressSubmit} />
+                        )}
+                        {orderStep === 'payment' && (
+                            <PaymentForm onSubmit={handlePayment} totalAmount={totalAmount} />
+                        )}
                     </>
                 )}
                 <button
@@ -113,3 +157,4 @@ function CartPage() {
 }
 
 export default CartPage;
+
