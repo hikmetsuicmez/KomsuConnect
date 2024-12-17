@@ -1,9 +1,14 @@
 package com.hikmetsuicmez.komsu_connect.service.impl;
 
+import com.hikmetsuicmez.komsu_connect.entity.User;
+import com.hikmetsuicmez.komsu_connect.response.CartItemResponse;
+import com.hikmetsuicmez.komsu_connect.service.CartService;
 import com.hikmetsuicmez.komsu_connect.service.PaymentService;
+import com.hikmetsuicmez.komsu_connect.service.UserService;
 import com.iyzipay.Options;
 import com.iyzipay.model.*;
 import com.iyzipay.request.CreatePaymentRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,7 @@ import java.util.UUID;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService{
 
         @Value("${iyzico.api-key}")
@@ -25,6 +31,9 @@ public class PaymentServiceImpl implements PaymentService{
 
         @Value("${iyzico.base-url}")
         private String baseUrl;
+
+        private final UserService userService;
+        private final CartService cartService;
 
         public Payment createPayment(String price, String cardHolderName, String cardNumber,
                                      String expireMonth, String expireYear, String cvc) {
@@ -55,16 +64,18 @@ public class PaymentServiceImpl implements PaymentService{
                 paymentCard.setRegisterCard(0);
                 request.setPaymentCard(paymentCard);
 
+                User currentUser = userService.getCurrentUser();
+
                 Buyer buyer = new Buyer();
-                buyer.setId("BY789");
-                buyer.setName("John");
-                buyer.setSurname("Doe");
-                buyer.setGsmNumber("+905350000000");
-                buyer.setEmail("email@email.com");
+                buyer.setId(currentUser.getId().toString());
+                buyer.setName(currentUser.getFirstName());
+                buyer.setSurname(currentUser.getLastName());
+                buyer.setGsmNumber(currentUser.getPhoneNumber());
+                buyer.setEmail(currentUser.getEmail());
                 buyer.setIdentityNumber("74300864791");
                 buyer.setLastLoginDate("2015-10-05 12:43:35");
                 buyer.setRegistrationDate("2013-04-21 15:12:09");
-                buyer.setRegistrationAddress("Nidakule Göztepe");
+                buyer.setRegistrationAddress(currentUser.getNeighborhood());
                 buyer.setIp("85.34.78.112");
                 buyer.setCity("Istanbul");
                 buyer.setCountry("Turkey");
@@ -72,23 +83,27 @@ public class PaymentServiceImpl implements PaymentService{
                 request.setBuyer(buyer);
 
                 Address shippingAddress = new Address();
-                shippingAddress.setContactName("Jane Doe");
+                shippingAddress.setContactName(currentUser.getFirstName() + " " + currentUser.getLastName());
                 shippingAddress.setCity("Istanbul");
                 shippingAddress.setCountry("Turkey");
-                shippingAddress.setAddress("Nidakule Göztepe");
+                shippingAddress.setAddress(currentUser.getNeighborhood());
                 shippingAddress.setZipCode("34742");
                 request.setShippingAddress(shippingAddress);
 
                 Address billingAddress = new Address();
-                billingAddress.setContactName("Jane Doe");
+                billingAddress.setContactName(currentUser.getFirstName() + " " + currentUser.getLastName());
                 billingAddress.setCity("Istanbul");
                 billingAddress.setCountry("Turkey");
-                billingAddress.setAddress("Nidakule Göztepe");
+                billingAddress.setAddress(currentUser.getNeighborhood());
                 billingAddress.setZipCode("34742");
                 request.setBillingAddress(billingAddress);
 
                 List<BasketItem> basketItems = new ArrayList<>();
+
+                List<CartItemResponse> products = cartService.viewCart(currentUser.getId());
+
                 BasketItem basketItem = new BasketItem();
+
                 basketItem.setId("BI101");
                 basketItem.setName("Test Product");
                 basketItem.setCategory1("Test Category");

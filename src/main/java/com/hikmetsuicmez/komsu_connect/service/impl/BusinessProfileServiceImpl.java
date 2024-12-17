@@ -55,6 +55,7 @@ public class BusinessProfileServiceImpl implements BusinessProfileService {
         businessDTO.setId(businessProfile.getId());
         businessDTO.setBusinessName(businessProfile.getBusinessName());
         businessDTO.setBusinessDescription(businessProfile.getBusinessDescription());
+        businessDTO.setPhotoUrl(businessProfile.getPhotoUrl());
         businessDTO.setNeighborhood(businessDTO.getNeighborhood());
 
         return businessDTO;
