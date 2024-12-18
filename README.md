@@ -9,6 +9,7 @@ KomşuConnect, mahallenizdeki işletmelere kolay erişim sağlamak ve onlardan a
 - [Kullanılan Teknolojiler](#kullanılan-teknolojiler)
 - [Proje Yapısı](#projeyapısı)
 - [API Kullanımı](#api-kullanımı)
+- [Gereksinimler](#gereksinimler)
 - [Kurulum](#kurulum)
 
 ## ✨ Özellikler 
@@ -198,11 +199,6 @@ src
 |                             | DELETE          | `/api/favorites/business/{businessId}`            | Belirtilen `businessId` işletmesini favorilerden kaldırır.                   |
 |                             | GET             | `/api/favorites`                                  | Kullanıcının favori ürünlerini ve işletmelerini listeler.                    |
 
-
-# KomşuConnect - Kurulum ve Çalıştırma Kılavuzu
-
-Bu doküman, KomşuConnect projesinin hem **backend** hem de **frontend** kısımlarının kurulum ve çalıştırma adımlarını içermektedir.
-
 ---
 
 ## Gereksinimler
@@ -219,6 +215,10 @@ Bu doküman, KomşuConnect projesinin hem **backend** hem de **frontend** kısı
 - Tarayıcı (Google Chrome, Firefox vb.)
 
 ---
+
+# KomşuConnect - Kurulum ve Çalıştırma Kılavuzu
+
+Bu doküman, KomşuConnect projesinin hem **backend** hem de **frontend** kısımlarının kurulum ve çalıştırma adımlarını içermektedir.
 
 ## Backend Kurulum ve Çalıştırma
 
