@@ -5,7 +5,6 @@ import com.hikmetsuicmez.komsu_connect.request.OrderRequest;
 import com.hikmetsuicmez.komsu_connect.request.PaymentRequest;
 import com.hikmetsuicmez.komsu_connect.response.OrderResponse;
 import com.hikmetsuicmez.komsu_connect.service.OrderService;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
