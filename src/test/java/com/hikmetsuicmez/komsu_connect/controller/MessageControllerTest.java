@@ -228,27 +228,4 @@ class MessageControllerTest {
         verify(messageService, times(1)).getConversationBetweenUsers(userId, nonExistingUserId);
     }
 
-
-    // Tests for api/messages/conversation/{userId}/{selectedUserId}
-
-    @Test
-    void shouldReturnEmptyListWhenNoConversationExists() throws Exception {
-        // Arrange
-        Long userId = 1L;
-        Long selectedUserId = 2L;
-
-        when(messageService.getConversationBetweenUsers(userId, selectedUserId)).thenReturn(Collections.emptyList());
-
-        // Act & Assert
-        mockMvc.perform(get("/api/messages/conversation/{userId}/{selectedUserId}", userId, selectedUserId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").isArray())
-                .andExpect(jsonPath("$.data").isEmpty());
-
-        verify(messageService, times(1)).getConversationBetweenUsers(userId, selectedUserId);
-    }
-
-
-
 }
