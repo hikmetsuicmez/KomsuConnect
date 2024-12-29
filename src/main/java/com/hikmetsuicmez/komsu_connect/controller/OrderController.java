@@ -20,7 +20,7 @@ public class OrderController extends RestBaseController {
         private final OrderService orderService;
 
         @PostMapping
-        public ApiResponse<?> createOrder(@RequestBody OrderRequest request) {
+        public ApiResponse<?> createOrder(@RequestBody @Valid OrderRequest request) {
                 OrderResponse order = orderService.createOrder(request.getUserId());
                 return ApiResponse.success(order);
         }

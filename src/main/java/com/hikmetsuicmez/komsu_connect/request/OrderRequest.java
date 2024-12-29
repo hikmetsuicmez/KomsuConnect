@@ -1,5 +1,6 @@
 package com.hikmetsuicmez.komsu_connect.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class OrderRequest {
 
+    @NotNull(message = "User ID cannot be null")
     private Long userId;
     private LocalDateTime createdAt;
 }
