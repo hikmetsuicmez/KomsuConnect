@@ -1,10 +1,7 @@
 package com.hikmetsuicmez.komsu_connect.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hikmetsuicmez.komsu_connect.request.OrderRequest;
 import com.hikmetsuicmez.komsu_connect.request.PaymentRequest;
-import com.hikmetsuicmez.komsu_connect.response.OrderResponse;
-import com.hikmetsuicmez.komsu_connect.service.OrderService;
 import com.hikmetsuicmez.komsu_connect.service.PaymentService;
 import com.iyzipay.model.Payment;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,15 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
